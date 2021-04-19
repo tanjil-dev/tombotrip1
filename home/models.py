@@ -153,3 +153,11 @@ class CommentForm(ModelForm):
     class Meta:
         model = Rating
         fields = ['subject', 'comment', 'rate']
+
+
+class Message(models.Model):
+    toUser = models.ForeignKey(User, related_name='toUser', on_delete=models.DO_NOTHING, null=True)
+    fromUser = models.ForeignKey(User, related_name='fromUser', on_delete=models.DO_NOTHING, null=True)
+    message=models.TextField(null=True,blank=True,default='')
+    update_at = models.DateTimeField(auto_now=True)
+    location = models.CharField(max_length=150, null=True, blank=True, default='')

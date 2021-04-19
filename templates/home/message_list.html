@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+{% block content %}
+<script>
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $('#myModal1').on('shown.bs.modal', function () {
+            $('#myInput1').trigger('focus')
+        })
+</script>
+ <!--banner area start-->
+ <div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">User Update</li>
+                            </ol>
+                        </nav>
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if message %}
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            {{ message }}
+        </div>
+    {% endif %}
+
+<!--banner area end-->
+   <!--Dashboard start-->
+   <div class="dashboard-content pt_80 pb_80">
+    <div class="container">
+        <div class="row move-dashboard">
+            {% include 'user/sidebar.html' %}
+            <div class="col-lg-9 col-md-12">
+                <div class="dashboard-body">
+                    <h3 class="mb_30">Message List</h3>
+                    <div class="tab-panels">
+                        {% for object in object_list %}
+    <!-- Display Objects -->
+                        <body>
+    <div style="width: 100%;">
+        <div style="width: 30%; height: 100px; float: left; ">
+            {{ object.fromUser.username}}
+        </div>
+        <div style="margin-left: 30%; height: 100px; ">
+            {{ object.message }}
+        </div>
+        <div style="margin-left: 30%; height: 100px; ">
+             <span class="quote-text"><button type="button" class="btn btn-primary quote-btn  mb-3" data-toggle="modal" data-target="#exampleModalCenter1">Message
+                </button></span>
+                <span>
+                    <i class="fa fa-question-circle"
+                       title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi voluptates libero voluptatum. Quaerat quae in soluta perspiciatis earum!"
+                       aria-hidden="true"></i>
+                </span>
+                <br>
+        </div>
+    </div>
+        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Message Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{% url 'message-create' object.toUser.username %}" method="post" class="form-inline">
+                    <div class="modal-body">
+
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        {#                <div style="padding-left: 5px;">#}
+                        {#                    <button type="submit" class="btn btn-primary">Search</button>#}
+                        {#                </div>#}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Confirm!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+    <!-- If objet_list is empty  -->
+    {% empty %}
+    <li>No Messages yet.</li>
+    {% endfor %}
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Dashboard end-->
+  
+{% endblock %}

@@ -1,12 +1,15 @@
 from django.urls import path, re_path
 
 from . import views
-from .views import SupplyDetails
+from .views import SupplyDetails,MessageDetailView,MessageListView,message_create
 
 urlpatterns = [
     path('', views.index, name='home'),
     path('test/', views.test, name='test'),
     path('message/', views.test, name='message'),
+    path('message/list',MessageListView.as_view(), name='message-list'),
+    path('message/detail/<pk>',MessageDetailView.as_view(), name='message-list'),
+    path('message_create/<str:username>',message_create, name='message-create'),
     path('details/<slug:slug>/',views.exp_details, name='exp-details' ),
     path('favourite/<int:id>/',views.favourite,name='favourite'),
     path('favourites/', views.favourite_list, name='favourite_list'),

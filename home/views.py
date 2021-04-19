@@ -19,6 +19,8 @@ from django.db.models import Max,Min,Count
 from django.template.loader import render_to_string
 from django.db.models import  Q
 from django.views import View
+from django.views.generic.list import ListView
+
 # Create your views here.
 def test(request):
     return render(request,'home/test.html')
@@ -111,11 +113,10 @@ class SupplyDetails(View):
         if supply.favourite.filter(id=request.user.id).exists():
             is_favourite = True
         if request.POST and request.user.is_authenticated:
-            user_name = request.user
-            supply_name = supply
-            time = dt.now()
+            toUser = supply.user
+            fromUser = request.user
             messages = request.POST['message']
-            sendMessage = Message.objects.create(user=user_name, supply=supply_name, time=time, message=messages)
+            sendMessage = Message.objects.create(toUser=toUser, fromUser=fromUser,  message=messages)
             self.msg = "Message submitted"
         context = {
             'message': self.msg,
@@ -244,7 +245,34 @@ def filter_data(request):
 	if len(transmissions)>0:
 		allProducts=allProducts.filter(productattribute__transmission__id__in=transmissions).distinct()
 	t=render_to_string('ajax/supply.html',{'data':allProducts})
-	return JsonResponse({'data':t})    
+	return JsonResponse({'data':t})
 
-    
-   
+
+class MessageListView(ListView):
+    # specify the model for list view
+    model = Message
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super(MessageListView, self).get_queryset(*args, **kwargs)
+        qs = qs.filter(toUser=self.request.user)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(MessageListView, self).get_context_data(**kwargs)
+        context['form'] = MessageForm()
+        return context
+
+def message_create(request,username):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        toUser = User.objects.get(username=username)
+        fromUser = request.user
+        messages = request.POST['message']
+        sendMessage = Message.objects.create(toUser=toUser, fromUser=fromUser, message=messages)
+        # context={}
+        message='Message send '
+        return render(request,"home/message_list.html",{'message':message})
+
+class MessageDetailView(DetailView):
+    # specify the model to use
+    model = Message
