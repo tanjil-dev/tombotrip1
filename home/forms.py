@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import ModelForm
 
-from home.models import Supply
+from home.models import Supply, Reservation
 
 
 class SupplyDetailsForm(forms.Form):
@@ -11,6 +12,12 @@ class SupplyDetailsForm(forms.Form):
         widget=forms.DateInput(attrs={"type": 'date'})
     )
     location = forms.CharField()
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ('confirm',)
+
 
 class MessageForm(forms.Form):
     message = forms.CharField()

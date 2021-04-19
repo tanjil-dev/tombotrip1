@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <script>
+        $(document).ready(function () {
+            // messages timeout for 10 sec
+            setTimeout(function () {
+                $('.alert').fadeOut('slow');
+            }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+        });
+    </script>
+    <!--banner area start-->
+    <div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner">
+                        <div class="text">
+                            <nav aria-label="breadcrumb-nav">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="/">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Dashboard</li>
+                                </ol>
+                            </nav>
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--banner area end-->
+
+    <!--Dashboard start-->
+    <div class="dashboard-content pt_80 pb_80">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="row move-dashboard">
+                <!-- add partial sidebar -->
+                {% include 'user/sidebar.html' %}
+                <div class="col-lg-9 col-md-7">
+
+                    <div class="dashboard-body">
+                        <h3>Reservation List View</h3>
+
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Supply</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Location</th>
+                                    <th>Preservation Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                {% for a in page_obj %}
+                                    <tr>
+                                        <td>{{ a.user }}</td>
+                                        <td>{{ a.supply }}</td>
+                                        <td>{{ a.start_date }}</td>
+                                        <td>{{ a.end_date }}</td>
+                                        <td>{{ a.location }}</td>
+                                        <td>{{ a.confirm|default_if_none:"" }}</td>
+                                        <td>
+                                            <a class="btn btn-outline-success"
+                                               href="{% url 'update_user_reservation' a.id %}">Update!</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <ul class="pagination justify-content-center">
+
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+
+                        {% if page_obj.number|add:'-4' > 1 %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                            </li>
+                        {% endif %}
+
+                        {% for i in page_obj.paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li class="page-item active"><a class="page-link">{{ i }} </a></li>
+                            {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a>
+                            </li>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

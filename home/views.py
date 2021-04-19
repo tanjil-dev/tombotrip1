@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
 from django.http import JsonResponse, Http404, HttpResponseForbidden
 from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 from datetime import datetime as dt
 
-from .forms import SupplyDetailsForm, ComposeForm, MessageForm
+from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm
 from .models import Experience, Supply, Rating, CommentForm, ProductAttribute, Cartypes, Reservation, Message
 
 from user.models import UserProfile
@@ -73,6 +74,43 @@ def supply(request):
 		'max_price':max_price
     }    
     return render(request,'home/supply.html',context)
+
+class ReservationView(View):
+    template_name = "user/reservation.html"
+    my_form = ReservationForm
+    def get(self, request):
+        data = Reservation.objects.all().order_by('-id')
+        total_unreserved = Reservation.objects.filter(confirm="False").count()
+        paginator = Paginator(data, 5)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'page_obj': page_obj,
+            'form': self.my_form,
+            'total': total_unreserved
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+class UpdateReservationView(View):
+    template_name = "user/update_reservation.html"
+    form = ReservationForm
+    def get(self, request, pk):
+        reservation = Reservation.objects.get(id=pk)
+        self.form = ReservationForm(instance=reservation)
+        context = {
+            "form": self.form
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request, pk):
+        reservation = Reservation.objects.get(id=pk)
+        self.form = ReservationForm(instance=reservation)
+        if request.method == 'POST':
+            self.form = ReservationForm(request.POST, instance=reservation)
+            if self.form.is_valid():
+                self.form.save()
+                return redirect('user_reservation')
 
 class SupplyDetails(View):
     template_name = "home/supply_details.html"

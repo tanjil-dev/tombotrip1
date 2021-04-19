@@ -15,7 +15,7 @@
                 <a href="{% url 'user_profile' %}"><i class="fa fa-bars" aria-hidden="true"></i>Dashboard</a>
             </li>
             <li class="">
-                <a href="{% url 'user_update' %}"><i class="fa fa-user" aria-hidden="true"></i>Edit profile</a>
+                <a href=""><i class="fa fa-user" aria-hidden="true"></i>Edit profile</a>
             </li>
        
             <li class="">
@@ -32,6 +32,9 @@
             </li>
             <li>
                 <a href="reviews.html"><i class="fa fa-star" aria-hidden="true"></i>Reviews</a>
+            </li>
+            <li>
+                <a href="{% url 'user_reservation' %}"><i class="fa fa-moon-o" aria-hidden="true"></i>Reservation <span class="badge badge-danger">{{ total }}</span></a>
             </li>
         </ul>
     </div>
