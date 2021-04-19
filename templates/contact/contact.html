@@ -1,0 +1,96 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | contact page{% endblock title%}
+{% block content %}
+<div class="banner-area content" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">Contact us</li>
+                            </ol>
+                        </nav>
+                        <h1>Send us a message</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+<div class="form-area pt_80 pb_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+                <form  method="POST" action="{% url 'contact' %}">
+                    <div class="row">
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                        {% else %}
+                            <input type="hidden" name="user_id" value="0">
+                        {% endif %}
+                        {% csrf_token %}
+                        <div class="col-md-12">
+                            <div class="contact-form">
+                                <div class="form-item">
+                                    <input name="name" type="text" id="name" placeholder="Name">
+                                </div>
+                                <div class="form-item">
+                                    <input name="email" type="text" id="email" placeholder="Email Address">
+                                </div>
+                                <div class="form-item">
+                                    <input name="phone" type="text" id="phone" placeholder="Phone Number">
+                                </div>
+                                <div class="form-item cont">
+                                    <input name="subject" type="text" id="subject" placeholder="subject">
+                                </div>
+                                <!-- <div class="form-item cont">
+                                    <input name="overview" type="text" id="overview" placeholder="overview">
+                                </div> -->
+                                <style>
+                                    .select2-container--default .select2-selection--single {
+                                        background-color: #fff;
+                                        padding: 0 5px;
+                                        border: 1px solid #ccc;
+                                    }
+                                </style>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="contact-form">
+                                <div class="massege-item">
+                                    <textarea name="overview"  placeholder="Massege"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="submit-me">
+                                <input class="btn  btn-primary quote-btn submit" type="submit" value="Submit">
+                                <!-- <button class="btn ">SEND MESSAGE</button> -->
+                               
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+{% endblock %}

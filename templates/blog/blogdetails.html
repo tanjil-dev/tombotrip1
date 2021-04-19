@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | {{ obj.title }} {% endblock title%}
+{% block content %}
+{% load crispy_forms_tags %}
+
+    <!--banner area start-->
+    <div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner">
+                        <div class="text">
+                            <nav aria-label="breadcrumb-nav">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="/">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Blog Details</li>
+                                </ol>
+                            </nav>
+                            <h1>Blog Details</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--banner area end-->
+ 
+    <!--Blog details start-->
+    <div class="blog-details pt_80 pb_60">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+                    <div class="blog-content">
+                        <div class="photo mb_30">
+                            <img src="{{ obj.image.url }}" alt="">
+                        </div>
+                        <div class="heading-text news-details">
+                            <h3>{{ obj.title }}</h3>
+                            <span class="by-admin">Posted by: <a href="#"><strong>{{ obj.author }}</strong></a></span> | <span class="by-admin">Pubsish: <strong>{{ obj.timestamp|date:"F d, Y" }}</strong></span>
+                        </div>
+                        <div class="text mt_20">
+                            {{ obj.description}}
+                        </div>
+                    </div>
+                    <div class="comment-list headstyle mt_30">
+                        <!--Comment start-->
+<div class="comment-wrap section comment-item">
+    {% with comments.count as total_comments %}
+    <h2>
+      {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h2>
+    {% endwith %}
+    {% for comment in comments %}
+    <div class="comment-item">
+      <div class="com-text">
+        <h5>{{ comment.name }}</h5>
+        <span class="date"><i class="fa fa-calendar"></i> {{ comment.created }}</span>
+        <p>{{ comment.body|linebreaks }}</p>
+      </div>
+    </div>
+    {% empty %}
+    <p>There are no comments yet.</p>
+    {% endfor %}
+
+    {% if new_comment %}
+    <h2>Your comment has been added.</h2>
+    {% else %}
+    <h2>Add a new comment</h2>
+    <form  method="post">
+        {{ comment_form| crispy  }}
+      {% csrf_token %}
+      <p><input class="btn btn-outline-secondary my-5" type="submit" value="Submit"></p>
+    </form>
+    {% endif %}
+    <div class="comment ">
+     
+    </div>
+   
+
+</div>
+<!--Comment end-->
+                       
+                    </div>
+                  
+                </div>
+
+
+                <!--sidebar-->
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+
+                    <!--Sidebar item-->
+                    <div class="sidebar-item mb_40">
+                        <div class="sidebar-title">
+                            <h5>Search Now</h5>
+                        </div>
+                        <div class="sidebar-body">
+                            <form action="{% url 'search' %}">
+                                <div id="custom-search-input">
+                                    <div class="input-group">
+                                        <input name="q" type="text" class="form-control input-lg" placeholder="Search..." />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-info btn-lg" type="button">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </span> 
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--/ Sidebar item-->
+
+                    <!--Sidebar item-->
+                    <div class="sidebar-item mb_40">
+                        <div class="sidebar-title">
+                            <h5>Recent Post</h5>
+                        </div>
+                        <div class="sidebar-body recent-post">
+                            {% for obj in latest_post %}
+                            
+                            <!--Post item-->
+                            <div class="s-post-item mb_10 mt_10">
+                                <div class="photo">
+                                    <a href="{{ blog.get_absolute_url }}"><img src="{{obj.image.url}}" alt=""></a>
+                                </div>
+                                <div class="text">
+                                    <span class="date-time">{{ obj.timestamp|date:"F d, Y" }}</span>
+                                    <h4>
+                                        <a href="{{ blog.get_absolute_url }}">{{obj.description| striptags|truncatechars:100}}</a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <!--/ Post item-->
+                            {% endfor %}
+
+                         
+
+                        </div>
+                    </div>
+                    
+                    <!--/ Sidebar item-->
+
+                    <!--Sidebar item-->
+                    <div class="sidebar-item mb_40">
+                        <div class="sidebar-title">
+                            <h5>Categories</h5>
+                        </div>
+                        <div class="sidebar-body category">
+                            <ul>
+                                {% for cat in categories %}
+                                <li><a href="{{cat.get_absolute_url}}">{{ cat }}</a></li>
+                                
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/ Sidebar item-->
+
+                    <!--Sidebar item-->
+                    <div class="sidebar-item mb_20">
+                        <div class="sidebar-title">
+                            <h5>Meta</h5>
+                        </div>
+                        <div class="sidebar-body category meta">
+                            <ul>
+                                <li><a href="#">Log in</a></li>
+                                <li><a href="#">Registration</a></li>
+                                <li><a href="#">Lorem</a></li>
+                                <li><a href="#">Lorem ip</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/ Sidebar item-->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Blog details end-->
+    
+{% endblock content %}

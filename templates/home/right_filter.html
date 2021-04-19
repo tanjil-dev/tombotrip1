@@ -1,0 +1,50 @@
+<div class="col-md-5 col-sm-6">
+
+    <div class="sidebar-item mb_30 mt_30 display-inline-tt">
+        <div class="sidebar-title">
+            <h5>Travel dates</h5>
+        </div>
+        <div class="sidebar-body">
+            <form action="">
+
+                <span class="quote-text"><button type="button" class="btn btn-primary quote-btn  mb-3" data-toggle="modal" data-target="#exampleModalCenter1">
+  Message
+</button></span>
+                <span>
+                    <i class="fa fa-question-circle"
+                       title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi voluptates libero voluptatum. Quaerat quae in soluta perspiciatis earum!"
+                       aria-hidden="true"></i>
+                </span>
+                <br>
+                <span class="quote-text"><button type="button" class="btn btn-primary quote-btn" data-toggle="modal"
+                                                 data-target="#exampleModalCenter">
+  Request reservation
+</button></span>
+
+            </form>
+            {% if is_favourite %}
+                <a href="{% url 'favourite' supply.id %}" class="quote-text btn btn-danger quote-btn  mt-3">
+
+
+                    <span class="favorited">Remove from my favorites</span>
+                </a>
+            {% else %}
+                <a href="{% url 'favourite' supply.id %}" class="quote-text btn btn-success quote-btn  mt-3">
+
+                    <span class="favorite">Add to my favorites</span>
+
+                </a>
+            {% endif %}
+            <div class="footer-social-list mb_15 mt_25">
+                <ul>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>

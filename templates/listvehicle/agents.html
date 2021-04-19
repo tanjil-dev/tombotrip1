@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | agents page{% endblock title%}
+{% block content %}
+ <!--banner area start-->
+ <div class="banner-area" style="background-image: url('{% static 'img/14.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">About TOMBI TRIP</li>
+                            </ol>
+                        </nav>
+                        <h1>About TOMBI TRIP</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner area end-->
+  <!--All member start-->
+  <div class="team-area pb_50 pt_80 ">
+    <div class="container">
+        <div class="row">
+            <div class="row text-center">
+                <div class="col-12">
+                    <div class="headline pb_50">
+                       <h1>Meet the TOMBI TRIP Team</h1>
+                        <p class="heading mt_15">At Camptoo we love the freedom of travelling with a motorhome. Our goal is to let people share the joy and fun of travelling with a motorhome or caravan at their own pace. Because we think there is no better way to explore our beautiful country. Share your vehicle and hit the road with an amazing Camptoo motorhome!</p>
+                    </div>
+                </div>
+            </div>
+            {% for agents in agents %}
+            <!--team member item-->
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb_30">
+                <div class="team-item text-center">
+                    <div class="photo-in">
+                        <div class="photo">
+                            <img src="{{agents.image.url}}" alt="">
+                        </div>
+                    </div>
+                    <div class="text">
+                        <h5> {{agents.name}} </h5>
+                        <span class="color-red mb_10"> {{agents.job_position}}</span>
+                        <p class="mt_10">{{agents.overview|safe}} </p>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+          
+
+        </div>
+    </div>
+</div>
+<!--All member-->
+{% endblock %}

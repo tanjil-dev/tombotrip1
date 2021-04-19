@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} |  page{% endblock title%}
+{% block content %}
+<!--banner area start-->
+<div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">Ownercamper</li>
+                            </ol>
+                        </nav>
+                        <h1>Blog</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner area end-->
+  <!--start-->
+  <div class="simple-page pt_80 pb_80">
+    <div class="container">
+        <div class="row">
+           <div class="col-lg-1 col-md-12"></div>
+            <div class="col-lg-10 col-md-12">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Rent out your camper</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Rent out a caravan</a>
+                    </div>
+                </nav>
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        
+                        {{ownercamper.ownercamper | safe}}
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        
+                        {{ownercamper.ownercaravan | safe}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-1 col-md-12"></div>
+        </div>
+    </div>
+</div>
+
+<!--end-->
+
+    <!--start-->
+
+    <!--end-->
+            <!--Our renters on owners start-->
+            <div class="testimonial-2-area bgwhite pt_80 pb_80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="headline pb_40 text-center">
+                                <p class="heading">Owners</p>
+                                <h1>Our renters on owners</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="testimonial-2 owl-carousel">
+                                {% for quote in quote %}
+                                <div class="item">
+                                    <div class="customer-say">
+                                        <div class="icon">
+                                            <i class="fa fa-quote-right" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="text">
+                                            <p>{{quote.quote}}</p>
+                                        </div>
+                                    </div>
+                                    
+        
+                                    <div class="man-name">
+                                        {% if quote.image %}
+        
+                                        <div class="photo">
+                                            <img src="{{ quote.image.url }}" alt="img">
+                                        </div>
+                                        {% endif %}
+                                        <div class="text">
+                                            <h5>{{quote.user}}</h5>
+                                            <span>{{quote.job_position}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                               
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--experiences end-->
+{% endblock %}

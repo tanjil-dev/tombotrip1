@@ -1,0 +1,201 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'test.css' %}">
+<h1>test</h1>
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Transmission</h5>
+    </div>
+    <div class="sidebar-body category">
+        <div class="checkbox-controls-tt sidebar">
+            <label for="flexible-d-tt">
+                <input type="checkbox" name="" id="" value="1"> Automatic transmission
+            </label>
+            <label for="flexible-d-tt">
+                <input type="checkbox" name="" id="" value="1"> Manual transmission
+            </label>
+        </div>
+    </div>
+</div>
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Categories</h5>
+    </div>
+    <div class="sidebar-body category">
+        <ul>
+            <li><a href="#">Privacy (5)</a></li>
+            <li><a href="#">Business (5)</a></li>
+            <li><a href="#">Tips (23)</a></li>
+            <li><a href="#">City (2)</a></li>
+            <li><a href="#">Home (5)</a></li>
+            <li><a href="#">Uncategorized (11)</a></li>
+        </ul>
+    </div>
+</div>
+<div class="sidebar-item mb_30 mt_30 display-inline-tt">
+        
+    <div class="sidebar-title">
+        <h5>Search Now</h5>
+    </div>
+    <div class="sidebar-body">
+        <form action="">
+            <div id="custom-search-input">
+                <div class="input-group">
+                    <input type="text" class="form-control input-lg" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="button">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Travel dates</h5>
+    </div>
+    <div class="sidebar-body">
+        <div class="form-groups datett">
+            <input type="text" id="datepicker1" name="Pick_up" placeholder="Pick up" />
+        </div>
+        <label for="flexible-d-tt">
+            <input type="checkbox" name="" id="" value="1"> Search for flexible dates
+        </label>
+        <span>
+            <i class="fa fa-question-circle" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi voluptates libero voluptatum. Quaerat quae in soluta perspiciatis earum!" aria-hidden="true"></i>
+        </span>
+    </div>
+</div>
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Travelling party</h5>
+    </div>
+    <div class="sidebar-body">
+        <span>Travellers</span>
+        <div class="form-groups mt_10">
+            <select class="js-example-basic-single" name="state">
+                <option value="OF">No Preference</option>
+                ...
+                <option value="WY">1</option>
+                <option value="WY">2</option>
+                <option value="WY">3</option>
+                <option value="WY">4</option>
+                <option value="WY">5</option>
+                <option value="WY">6</option>
+                <option value="WY">7</option>
+                <option value="WY">8</option>
+                <option value="WY">9</option>
+                <option value="WY">10</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sidebar-body">
+        <span class="mb_10">Berths</span>
+        <div class="form-groups mt_10">
+            <select class="js-example-basic-single" name="state">
+                <option value="OF">No Preference</option>
+                ...
+                <option value="WY">1 - 3</option>
+                <option value="WY">2 - 4</option>
+                <option value="WY">3 - 5</option>
+                <option value="WY">4 - 6</option>
+                <option value="WY">5 - 7</option>
+                <option value="WY">6 - 8</option>
+                <option value="WY">7 - 9</option>
+                <option value="WY">8 - 10</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Pickup location</h5>
+    </div>
+    <div class="sidebar-body">
+        <div class="form-groups">
+            <select class="js-example-basic-single" name="state">
+                <option value="at">Austria</option>
+                <option value="au">Australia</option>
+                <option value="be">Belgium</option>
+                <option value="bg">Bulgaria</option>
+                <option value="cy">Cyprus</option>
+                <option value="de">Germany</option>
+                <option value="es">Spain</option>
+                <option value="fi">Finland</option>
+                <option value="gb">United Kingdom</option>
+                <option value="ge">Georgia</option>
+                <option value="gr">Greece</option>
+                <option value="hr">Croatia</option>
+                <option value="it">Italy</option>
+                <option value="nl">Netherlands</option>
+                <option value="no">Norway</option>
+                <option value="pl">Poland</option>
+                <option value="pt">Portugal</option>
+                <option value="ro">Romania</option>
+                <option value="us">United States</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Travel Address</h5>
+    </div>
+    <div class="sidebar-body">
+        <div class="form-groups">
+            <input type="search" id="address" class="form-control" placeholder="Where are we going?" />
+        </div>
+    </div>
+</div>
+<div class="sidebar-item mb_30 display-inline-tt">
+    <div class="sidebar-title">
+        <h5>Type of vehicle</h5>
+    </div>
+    <div class="sidebar-body">
+        <div class="checkbox-controls-tt sidebar">
+            <div class="checkbox-tt pt_25">
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/campervan.png" class="checkbox-image" alt="">
+                    <span>Semi-integrated</span>
+                </label>
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/campervan.png" class="checkbox-image" alt="">
+                    <span>Fully integrated</span>
+                </label>
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/campervan.png" class="checkbox-image" alt="">
+                    <span>Alcove</span>
+                </label>
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/campervan.png" class="checkbox-image" alt="">
+                    <span>Campervan</span>
+                </label>
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/suv-car.png" class="checkbox-image" alt="">
+                    <span>Pop-up caravan</span>
+                </label>
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/suv-car.png" class="checkbox-image" alt="">
+                    <span>Mobile home</span>
+                </label>
+                <label for="semi-integrated-camper">
+                    <input type="checkbox" name="Semi_integrated" value="1" id="">
+                    <img src="img/icon/parking.png" class="checkbox-image" alt="">
+                    <span>Caravan</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>

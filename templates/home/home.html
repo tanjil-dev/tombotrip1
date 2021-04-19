@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .carddj {
+        overflow: hidden;
+        padding: 15px;
+    }
+
+    .font-bold.tt-product-head a,
+    .right.save a{
+        color: #000;
+        text-decoration: none;
+    }
+    .font-bold.tt-product-head a:hover,
+    .right.save a:hover{
+        color: #f04b0f;
+    }
+</style>
+
+   <!--Slider start-->
+   <div class="slider-area pb_80 pt_250 xs_pt_80" style="background-image:  url('{% static 'img/slide5.jpg' %}')">
+    <div class="container" style="max-width: 1220px;">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="slide-h">
+                    <h1>Hire your perfect campervan close to home</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="booking-form">
+                    <form action="form-slide">
+                        <div class="row">
+                            <div class="col-lg-3 col-12">
+                                <span class="form-group-headin">Travel dates</span>
+                                <div class="form-groups">
+                                    <input type="search" id="address" class="form-control" placeholder="Where are we going?" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-12">
+                                <span class="form-group-headin">Travel dates</span>
+                                <div class="row">
+
+                                    <div class="col-6">
+                                        <div class="form-groups datett">
+                                            <input type="text" id="datepicker1" name="Pick_up" placeholder="Pick up" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-groups datett">
+                                            <input type="text" id="datepicker2" name="drop_off" placeholder="Drop off" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-12">
+                                <span class="form-group-headin">Travel dates</span>
+                                <div class="form-groups">
+                                    <select class="js-example-basic-single" name="state">
+                                        <option value="OF">Select person</option>
+                                        ...
+                                        <option value="WY">1 person</option>
+                                        <option value="WY">2 persons</option>
+                                        <option value="WY">3 persons</option>
+                                        <option value="WY">4 persons</option>
+                                        <option value="WY">5 persons</option>
+                                        <option value="WY">6 persons</option>
+                                        <option value="WY">7 persons</option>
+                                        <option value="WY">8 persons</option>
+                                        <option value="WY">9 persons</option>
+                                        <option value="WY">10 persons</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <div class="form-groups">
+                                    <button type="submit" class="btn btn-primary booking-btn xs_mt_10" name="form1"><i class="fa fa-search" aria-hidden="true"></i> Rental vehicles</button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="checkbox-tt  color-white">
+                                    <label for="flexible-d-tt">
+                                        <input type="checkbox" name="name3" id="idname3" value="1"> Search for flexible dates
+                                    </label>
+                                    <span>
+                                        <i class="fa fa-question-circle" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi voluptates libero voluptatum. Quaerat quae in soluta perspiciatis earum!" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Slider end-->
+
+<!--Review area-->
+<div class="star-review-area text-center">
+    <div class="review">
+        <ul>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
+            <li class="color-white">Rating:9.0 out of</li>
+            <li><a href="">25536 experiences</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--   Services start-->
+<div class="services-section pt_50 pb_20 text-center">
+    <div class="container">
+        <div class="row">
+
+            <!--Services item-->
+            <div class="col-lg-2-5-tt col-md-4 col-sm-6 col-12">
+                <div class="item mb_30">
+                    <div class="icon">
+                        <i class="fa fa-car" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        Wide supply of private campervans, motorhomes and caravans
+                    </div>
+                </div>
+            </div>
+
+            <!--Services item-->
+            <div class="col-lg-2-5-tt col-md-4 col-sm-6 col-12">
+                <div class="item mb_30">
+                    <div class="icon">
+                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        Properly insured campervans
+                    </div>
+                </div>
+            </div>
+
+            <!--Services item-->
+            <div class="col-lg-2-5-tt col-md-4 col-sm-6 col-12">
+                <div class="item mb_30">
+                    <div class="icon">
+                        <i class="fa fa-comments" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        24/7 support
+                    </div>
+                </div>
+            </div>
+
+            <!--Services item-->
+            <div class="col-lg-2-5-tt col-md-4 col-sm-6 col-12">
+                <div class="item mb_30">
+                    <div class="icon">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        Hire a campervan anywhere in Europe or Australia
+                    </div>
+                </div>
+            </div>
+
+            <!--Services item-->
+            <div class="col-lg-2-5-tt col-md-4 col-sm-6 col-12">
+                <div class="item mb_30">
+                    <div class="icon">
+                        <i class="fa fa-gbp" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        Vehicles for any budget
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Services start-->
+      <!--holyday start-->
+      <div class="holy-day-area pb_50 pt_80 ">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <div class="headline pb_50">
+                        <p class="heading">Experience</p>
+                        <h1>Experience amazing camping holidays</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row holy-day-carousl owl-carousel">
+          
+                {% for exp in exp %}
+                <!-- item-->
+                <div class="item mb_30">
+                    <div class="holy-day-item text-center">
+                        <div class="photo-in">
+                            <div class="photo">
+                                <img src="{{exp.image.url}}" alt="">
+                                <div class="social-group">
+                                    <a href="{{ exp.get_absolute_url }}">More info</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text">
+                            <h5><a href="{{ exp.get_absolute_url }}">{{exp.title_keyword}}</a></h5>
+                        </div>
+                    </div>
+                </div>
+
+               {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+    <!--Holy day end-->
+        <!--vehicles-area start-->
+        <div class="vehicles-area pt_80 pb_80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="headline pb_20 text-center">
+                            <p class="heading">Rental Vehicles</p>
+                            <h1>Have a look at our supply of rental vehicles</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for supply in supply %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 pt_30">
+                        <div class="vehicles-item">
+                            <div class="photo-list owl-carousel">
+                                <img src="{{supply.main_photo.url}}" alt="">
+                                <img src="{{supply.image1.url}}" alt="">
+                                <img src="{{supply.image2.url}}" alt="">
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="text">
+                                        <div class="list">
+                                            <ul>
+                                                <li class="font-bold tt-product-head"><a href=" {% url 'supply-details' supply.id supply.slug %} ">{{supply.title}}</a> <span class="right">
+                                                        <div class="review">
+                                                            <i class="fa fa-star{% if supply.avaregereview < 1%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 2%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 3%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 4%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 5%}-o empty{% endif%}"></i> {{ supply.avaregereview}}/{{ supply.countreview}}
+                                                        </div>
+                                                    </span>
+                                                </li>
+                                                <li class="li-middle">from €{{supply.price}} per night <span class="right"></span></li>
+                                                <li>
+                                                    <div class="review r-bottom">
+                                                        <ul>
+                                                            <li><img src="https://d2g4biwrjrcyy4.cloudfront.net/img-resized/camptoo/icons/seats.svg" alt="">{{supply.seats}}</li>
+                                                            <li><i class="fa fa-bed" aria-hidden="true"></i> {{supply.bearth}}</li>
+                                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> {{supply.city}}</li>
+                                                        </ul>
+                                                    </div> 
+                                             
+                                                   
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+    
+                                    <!--bottom box link here-->
+                                    <!-- <a href="#" class="stretched-link"></a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h1>No List</h1>
+                    {% endfor %}
+    
+                   
+    
+    
+                </div>
+                <div class="row">
+                    <div class="col-12 mt_50 text-center">
+                        <span class="quote-text"><a class="btn btn-primary quote-btn" href="{% url 'supply' %}" role="button">View all vehicles</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-2-area bgwhite pt_80 pb_80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="headline pb_40 text-center">
+                            <p class="heading">Testimonial </p>
+                            <h1>SEE OUR CLIENT FEEDBACK</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="testimonial-2 owl-carousel">
+                            {% for quote in quote %}
+                            <div class="item">
+                                <div class="customer-say">
+                                    <div class="icon">
+                                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="text">
+                                        <p>{{quote.quote}}</p>
+                                    </div>
+                                </div>
+                                
+    
+                                <div class="man-name">
+                                    {% if quote.image %}
+    
+                                    <div class="photo">
+                                        <img src="{{ quote.image.url }}" alt="img">
+                                    </div>
+                                    {% endif %}
+                                    <div class="text">
+                                        <h5>{{quote.user}}</h5>
+                                        <span>{{quote.job_position}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                           
+                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

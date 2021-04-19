@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+{% block content %}
+ <!--banner area start-->
+ <div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">User Update</li>
+                            </ol>
+                        </nav>
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner area end-->
+   <!--Dashboard start-->
+   <div class="dashboard-content pt_80 pb_80">
+    <div class="container">
+        <div class="row move-dashboard">
+            {% include 'user/sidebar.html' %}
+            <div class="col-lg-9 col-md-12">
+                <div class="dashboard-body">
+                    <h3 class="mb_30">Edit Your Profile</h3>
+                    <div class="tab-panels">
+                        <form  class="mt_15" method="POST" >
+                            {% csrf_token %}
+                            {{form|crispy}}
+                            <fieldset class="form-group">
+                                {{ user_form.as_p  }}
+                                {{ profile_form.as_p  }}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="primary-btn" type="submit">Update</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Dashboard end-->
+  
+{% endblock %}

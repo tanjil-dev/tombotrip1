@@ -1,0 +1,144 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | faq page{% endblock title%}
+{% block content %}
+<script>
+    $( function() {
+        $( "#accordion" ).accordion();
+    } );
+</script>
+
+<div class="form-area pt_100 pb_100" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="text mt_tt_mb text-center mb_40">
+                    <h1> Do you have a question? Ask it here</h1>
+                </div>
+            </div>
+            <div class="col-md-2 col-12 search-boxs">
+                <!--empty-->
+            </div>
+            <div class="col-md-8 col-12 search-boxs">
+                <form action="">
+                    <div class="content gsearch">
+                        <div class="input-group gsearch">
+                            <input type="search" class="form-control" id="gsearch" name="gsearch" placeholder="Enter a search term">
+                            <span class="input-group-btn gsearch">
+                                <button class="btnme gsearch" type="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2 col-12 search-boxs">
+                <!--empty-->
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- section -->
+ <div class="section menu-horizontal container pt_50 pb_70">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div id="accordion">
+                {% for rs in faq %}
+                    <h3>{{ rs.title }}</h3>
+                    <div>
+                        <p>
+                            {{ rs.description  }}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+ <!-- <div class="menu-horizontal container pt_50 pb_70">
+    <div class="row">
+        <div class="col-md-12 pt_30">
+            <div class="row menu-container" id="menu">
+                
+              
+                {% for faq in faq %}
+                <div class="col-md-12 menu-item acc-class" id="accordion">
+                    <a data-toggle="collapse" class="collapsed" data-target="#research-collapse" href="#research-collapse" aria-expanded="false" aria-controls="research-collapse">
+                        <i class="fa fa-angle-double-down" aria-hidden="true"></i> {{ faq.title }}
+                    </a>
+                    <div class="collapse" id="research-collapse" data-parent="#menu">
+                        <div class="container">
+                            <div class="row acc-text">
+                                {{ faq.description  }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+               
+
+            </div>
+        </div>
+    </div>
+</div>   -->
+
+
+
+
+
+<div class="help-body-area text-center services-section pb_80 pt_80">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="headline pb_50">
+                    <p class="heading mb_40" style="margin: 0 5%;">We try to make it as easy as possible to take care of everything online. You'll find the solution directly most of the time via the search bar above. Do you still prefer asking your question directly? Choose your preference below.</p>
+                    <h1>Unable to figure it out?</h1>
+                    <p class="heading">Ask your question directly to our customer happiness team! </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-5 col-sm-12">
+                <div class="item contact-box mb_30">
+                    <div class="icon">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                       <h4>Send a message</h4>
+                        <p>Send us a message and we'll get back to you as soon as possible</p>
+                        <span class="quote-text"><a class="btn btn-primary quote-btn" href="{% url 'contact' %}" role="button">Send a message</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-sm-12">
+                <div class="item contact-box mb_30">
+                    <div class="icon">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        <h4>Call us</h4>
+                        <p>You can reach us on business days from 09:00 until 17:30. From May until September, you can reach us on Saturdays as well</p>
+                        <span class="quote-text"><a class="btn btn-primary quote-btn" href="tel:+31852083736" role="button">Show phone numbe</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

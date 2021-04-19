@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec 
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+    });
+</script>
+  <!--banner area start-->
+  <div class="banner-area content" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">Blog</li>
+                            </ol>
+                        </nav>
+                        <h1>Blog</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center mb-5 mt-5 moda" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="col-lg-5 mb-5 mb-lg-0 moal-dialog" role="document">
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+                {{ message }}
+               
+            </div> 
+        {% endfor %}
+    {% endif %}
+        <div class="modal-content">
+            <div class="modal-header">
+               
+                <h5 class="modal-title" id="">Sign Up</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {{form|crispy}}
+                    
+                    <button class="primary-btn btn btn-info btn-md log" type="submit">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+	
+</div>
+{% endblock %}

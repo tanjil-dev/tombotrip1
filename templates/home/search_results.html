@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .carddj {
+        overflow: hidden;
+        padding: 15px;
+    }
+
+    .font-bold.tt-product-head a,
+    .right.save a{
+        color: #000;
+        text-decoration: none;
+    }
+    .font-bold.tt-product-head a:hover,
+    .right.save a:hover{
+        color: #f04b0f;
+    }
+    .center{
+        text-align: center;
+    }
+</style>
+
+  <!--banner area start-->
+  <div class="banner-area" style="background-image: url('{% static 'img/14.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="inner">
+                    <div class="text">
+                        <nav aria-label="breadcrumb-nav">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">Supply</li>
+                            </ol>
+                        </nav>
+                        <h1>Motorhomes and campervans for hire in Netherlands</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner area end-->
+
+<h1 class="center mt-5">Search result</h1>
+<!--Shop-Area-->
+
+<div class="shop-area bg-area pt_50 pb_80">
+    <div class="container">
+        <div class="row">
+            
+
+            <div class="col-lg-8 col-md-6 col-sm-12">
+
+
+                <div class="row">
+
+                    <!--item-->
+                    {% for supply in supply %}
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-12 pt_30">
+                        <div class="vehicles-item">
+                            <div class="photo-list owl-carousel">
+                                <img src="{{supply.main_photo.url}}" alt="">
+                                <img src="{{supply.image1.url}}" alt="">
+                                <img src="{{supply.image2.url}}" alt="">
+                            </div>
+                            <div class="more-info">
+                                <a href=" {% url 'supply-details' supply.id supply.slug %} ">More info</a>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="text">
+                                        <div class="list">
+                                            <ul>
+                                                <li class="font-bold tt-product-head">{{supply.title}}<span class="right">
+                                                        <div class="review">
+                                                            <i class="fa fa-star{% if supply.avaregereview < 1%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 2%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 3%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 4%}-o empty{% endif%}"></i>
+                                                                <i class="fa fa-star{% if supply.avaregereview < 5%}-o empty{% endif%}"></i> {{ supply.avaregereview}}/{{ supply.countreview}}
+                                                        </div>
+                                                    </span>
+                                                </li>
+                                                <li class="li-middle">from €{{supply.price}} per night <span class="right"></span></li>
+                                                <li>
+                                                    <div class="review r-bottom">
+                                                        <ul>
+                                                            <li><img src="https://d2g4biwrjrcyy4.cloudfront.net/img-resized/camptoo/icons/seats.svg" alt="">{{supply.seats}}</li>
+                                                            <li><i class="fa fa-bed" aria-hidden="true"></i> {{supply.bearth}}</li>
+                                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> {{supply.city}}</li>
+                                                        </ul>
+                                                    </div> 
+                                               
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                     <h1>No Supply list </h1>
+                    {% endfor %}
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

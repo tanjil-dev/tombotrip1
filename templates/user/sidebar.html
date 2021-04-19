@@ -1,0 +1,35 @@
+<div class="col-lg-3 col-md-5 mb_50">
+    <div class="move-sidebar">
+        <div class="user-photo-name">
+            {% if user.id is not None %}
+            <div class="photo">
+                <img src="{{  request.session.userimage }}" alt="">
+            </div>
+            {% endif %}
+            <div class="name"> 
+                <h5>{{ user.first_name}} {{ user.last_name}} </h5>
+            </div>
+        </div>
+        <ul>
+            <li class="active">
+                <a href="{% url 'user_profile' %}"><i class="fa fa-bars" aria-hidden="true"></i>Dashboard</a>
+            </li>
+            <li class="">
+                <a href="{% url 'user_update' %}"><i class="fa fa-user" aria-hidden="true"></i>Edit profile</a>
+            </li>
+       
+            <li class="">
+                <a href="{% url 'password' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>change password</a>
+            </li>
+            <li>
+                <a href="notifications.html"><i class="fa fa-commenting-o" aria-hidden="true"></i>Messages</a>
+            </li>
+            <li>
+                <a href="varifiction.html"><i class="fa fa-shield" aria-hidden="true"></i>Varifiction</a>
+            </li>
+            <li>
+                <a href="reviews.html"><i class="fa fa-star" aria-hidden="true"></i>Reviews</a>
+            </li>
+        </ul>
+    </div>
+</div>

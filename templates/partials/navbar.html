@@ -1,0 +1,67 @@
+  <!--Main Menu start-->
+  {% load static %}
+  <div class="menu-section-2">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <div class="main-logo">
+                    <a href="/"><img src="{% static 'img/logo1.png' %}" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12">
+                <div class="menu nav-menu">
+                    <nav>
+                        <ul id="nav">
+                           
+                            {% if user.id is not None %}
+                            <li><a href="{% url 'supply' %}">Rent out your vehicle</a></li>
+                            <li><a href="{% url 'blog' %}">Blog</a></li>
+                                <li><a href="">Messages</a></li>
+                                <li><a href="">Help <span class="caret"></span></a>
+                                    <ul class="submenu">
+                                        <li><a href="{% url 'traveller' %}">For travellers</a></li>
+                                        <li><a href="{% url 'ownercamper' %}">For owners</a></li>
+                                        <li><a href="{% url 'faq' %}">Other questions and contact</a></li>
+                                    </ul>
+                                </li>
+                                <li class="user-photo-tt"><a href="{% url 'user_profile' %}"><img class="user-menu-photo" src="{{  request.session.userimage }}" alt=""></a></li>
+                                <li class="user-name-tt"><a href="javascript:void;">{{user.username}} <span class="caret"></span></a>
+                                    <ul class="submenu">
+                                        <li><a href="{% url 'user_profile' %}">My dashboard</a></li>
+                                        <li><a href="{% url 'ownercamper' %}">For owners</a></li>
+                                        <li><a href="">Messages</a></li>
+                                        <li><a href="#">My reservations</a></li>
+                                        <li><a href="">Resolution centre</a></li>
+                                        <li><a href="{% url 'favourite_list' %}">Favorites</a></li>
+                                        <li><a href="">My calender</a></li>
+                                        <li><a href="{% url 'logout' %}">logout</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            <li><a href="{% url 'supply' %}">Supply</a></li>
+                            <li><a href="{% url 'blog' %}">Blog</a></li>
+                            <li><a href="">Help <span class="caret"></span></a>
+                                <ul class="submenu">
+                                    <li><a href="{% url 'traveller' %}">For travellers</a></li>
+                                    <li><a href=" {% url 'ownercamper' %}">For owners</a></li>
+                                    <li><a href="{% url 'faq' %}">Other questions and contact</a></li>
+                                </ul>
+                            </li>
+                            <li data-toggle="modal" data-target="#exampleModalsignup" data-whatever="@fat"><a href="{% url 'signup_form' %}">Sign up</a></li>
+                            <li data-toggle="modal" data-target="#exampleModalsign" data-whatever="@mdo"><a href="{% url 'login_form' %}">Login</a></li>
+{#                            <li data-toggle="modal" data-target="#exampleModalsign" data-whatever="@mdo"><a href="{% url 'chat' %}">Chat</a></li>#}
+                            <li class="header-contact-item quote">
+                                <span class="quote-text"><a class="btn btn-primary quote-btn" href="{% url 'listvehicle' %}" role="button">List my vehicle</a></span>
+                            </li>
+                            {% endif %}
+                           
+                           
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Main menu end-->

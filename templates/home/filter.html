@@ -1,0 +1,37 @@
+{% load static %}
+
+<div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="sidebar-item mb_30 mt_30 display-inline-tt">
+        <div class="sidebar-title">
+            <h5>Search Now</h5>
+        </div>
+        <div class="sidebar-body">
+            <form action="{% url 'search' %}">
+                <div id="custom-search-input">
+                    <div class="input-group">
+                        <input name="q" type="text" class="form-control input-lg" placeholder="Search..." />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-info btn-lg" type="button">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </span> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  
+</div>
+<div class="card mb-4">
+    <h6 class="card-header">Price</h6>
+    <div class="list-group list-group-flush">
+        <li class="list-group-item">
+            <input type="range" id="rangeInput" min="{{minMaxPrice.price__min}}" max="{{minMaxPrice.price__max}}" value="{{minMaxPrice.price__min}}" oninput="maxPrice.value=this.value" />
+            <p>{{minMaxPrice.price__min}}-{{minMaxPrice.price__max}}</p>
+        </li>
+        <li class="list-group-item">
+            Max: <input type="number" value="{{minMaxPrice.price__min}}" class="form-control" onkeyup="rangeInput.value=this.value" id="maxPrice" min="{{minMaxPrice.price__min}}" max="{{minMaxPrice.price__max}}" />
+            <button type="button" data-min="{{minMaxPrice.price__min}}" data-max="{{minMaxPrice.price__max}}" class="btn btn-info btn-sm mt-2" id="priceFilterBtn">Filter</button>
+        </li>
+    </div>
+</div>

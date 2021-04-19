@@ -1,0 +1,1278 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    {% load crispy_forms_tags %}
+    <style>
+
+        .lb-loader, .lightbox {
+            text-align: center;
+            line-height: 0
+        }
+
+        .lb-dataContainer:after, .lb-outerContainer:after {
+            content: "";
+            clear: both
+        }
+
+        html.lb-disable-scrolling {
+            overflow: hidden;
+            position: fixed;
+            height: 100vh;
+            width: 100vw
+        }
+
+        .lightboxOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            background-color: #000;
+            opacity: .8;
+            display: none
+        }
+
+        .lightbox {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            font-weight: 400
+        }
+
+        .lightbox .lb-image {
+            display: block;
+            height: auto;
+            max-width: inherit;
+            max-height: none;
+            border-radius: 3px;
+            border: 4px solid #fff
+        }
+
+        .lightbox a img {
+            border: none
+        }
+
+        .lb-outerContainer {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            border-radius: 4px;
+            background-color: #fff
+        }
+
+        .lb-loader, .lb-nav {
+            position: absolute;
+            left: 0
+        }
+
+        .lb-outerContainer:after {
+            display: table
+        }
+
+        .lb-loader {
+            top: 43%;
+            height: 25%;
+            width: 100%
+        }
+
+        .lb-cancel {
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: 0 auto;
+            background: url(../img/icon/loading.gif) no-repeat
+        }
+
+        .lb-nav {
+            top: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 10
+        }
+
+        .lb-container > .nav {
+            left: 0
+        }
+
+        .lb-nav a {
+            outline: 0;
+            background-image: url(data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+        }
+
+        .lb-next, .lb-prev {
+            height: 100%;
+            cursor: pointer;
+            display: block
+        }
+
+        .lb-nav a.lb-prev {
+            width: 34%;
+            left: 0;
+            float: left;
+            background: url(../img/icon/prev.png) left 48% no-repeat;
+            opacity: 0;
+            -webkit-transition: opacity .6s;
+            -moz-transition: opacity .6s;
+            -o-transition: opacity .6s;
+            transition: opacity .6s
+        }
+
+        .lb-nav a.lb-prev:hover {
+            opacity: 1
+        }
+
+        .lb-nav a.lb-next {
+            width: 64%;
+            right: 0;
+            float: right;
+            background: url(../img/icon/next.png) right 48% no-repeat;
+            opacity: 0;
+            -webkit-transition: opacity .6s;
+            -moz-transition: opacity .6s;
+            -o-transition: opacity .6s;
+            transition: opacity .6s
+        }
+
+        .lb-nav a.lb-next:hover {
+            opacity: 1
+        }
+
+        .lb-dataContainer {
+            margin: 0 auto;
+            padding-top: 5px;
+            width: 100%;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px
+        }
+
+        .lb-dataContainer:after {
+            display: table
+        }
+
+        .lb-data {
+            padding: 0 4px;
+            color: #ccc
+        }
+
+        .lb-data .lb-details {
+            width: 85%;
+            float: left;
+            text-align: left;
+            line-height: 1.1em
+        }
+
+        .lb-data .lb-caption {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1em
+        }
+
+        .lb-data .lb-caption a {
+            color: #4ae
+        }
+
+        .lb-data .lb-number {
+            display: block;
+            clear: left;
+            padding-bottom: 1em;
+            font-size: 12px;
+            color: #999
+        }
+
+        .lb-data .lb-close {
+            display: block;
+            float: right;
+            width: 30px;
+            height: 30px;
+            background: url(../img/icon/close.png) top right no-repeat;
+            text-align: right;
+            outline: 0;
+            opacity: .7;
+            -webkit-transition: opacity .2s;
+            -moz-transition: opacity .2s;
+            -o-transition: opacity .2s;
+            transition: opacity .2s
+        }
+
+        .lb-data .lb-close:hover {
+            cursor: pointer;
+            opacity: 1
+        }
+
+
+        /*----------------------------*\
+            Inputs
+        \*----------------------------*/
+
+        .input {
+            width: 100%;
+            height: 40px;
+            padding: 0px 15px;
+            border: none;
+            background-color: transparent;
+            -webkit-box-shadow: 0px 0px 0px 1px #DADADA inset, 0px 0px 0px 5px transparent;
+            box-shadow: 0px 0px 0px 1px #DADADA inset, 0px 0px 0px 5px transparent;
+            -webkit-transition: 0.3s all;
+            transition: 0.3s all;
+        }
+
+        .input:focus {
+            -webkit-box-shadow: 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A;
+            box-shadow: 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A;
+        }
+
+        textarea.input {
+            padding: 15px;
+        }
+
+        .input-checkbox .caption {
+            max-height: 0;
+            overflow: hidden;
+            -webkit-transition: 0.3s max-height;
+            transition: 0.3s max-height;
+        }
+
+        .input-checkbox > label {
+            color: #30323A;
+        }
+
+        .input-checkbox input[type="checkbox"]:checked + label + .caption, .input-checkbox input[type="radio"]:checked + label + .caption {
+            max-height: 800px;
+        }
+
+        /*-- review form --*/
+
+        .review-form textarea.input {
+            height: 90px;
+        }
+
+        .review-form .input-rating .stars {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .review-form .input-rating .stars input[type="radio"] {
+            display: none;
+        }
+
+        .review-form .input-rating .stars > label {
+            float: right;
+            cursor: pointer;
+            padding: 0px 3px;
+            margin: 0px;
+            -webkit-transition: 0.3s all;
+            transition: 0.3s all;
+        }
+
+        .review-form .input-rating .stars > label:hover, .review-form .input-rating .stars > label:hover ~ label {
+            -webkit-transform: scale(1.5);
+            -ms-transform: scale(1.5);
+            transform: scale(1.5);
+        }
+
+        .review-form .input-rating .stars > label:before {
+            content: "\f006";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            color: #DADADA;
+            font-size: 14px;
+            -webkit-transition: 0.3s all;
+            transition: 0.3s all;
+        }
+
+        .review-form .input-rating .stars > label:hover:before, .review-form .input-rating .stars > label:hover ~ label:before {
+            content: "\f005";
+            color: #FFB656;
+        }
+
+        .review-form .input-rating .stars > input:checked label:before, .review-form .input-rating .stars > input:checked ~ label:before {
+            content: "\f005";
+            color: #FFB656;
+        }
+
+
+        .single-product-page {
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+
+        .product-details span.price {
+            font-weight: bold;
+            color: #F04B0F;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .all-product-image {
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .single-product-image {
+            background-size: contain;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-color: #f6f6f6;
+            height: 300px;
+        }
+
+        .all-product-image .owl-nav {
+            position: absolute;
+            text-align: center;
+            top: 40%;
+            transform: translateY(-50%);
+            width: 100%;
+            color: #fff;
+        }
+
+        .all-product-image .owl-nav .owl-prev {
+            left: 0;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            line-height: 38px;
+            font-size: 32px;
+            border-radius: 0;
+            padding-top: 5px;
+            background: #f2f2f2;
+            color: #F04B0F;
+        }
+
+        .all-product-image .owl-nav .owl-next {
+            right: 0;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            line-height: 38px;
+            font-size: 32px;
+            background: #f2f2f2;
+            border-radius: 0;
+            padding-top: 5px;
+            color: #F04B0F;
+        }
+
+        .owl-theme .owl-nav [class*=owl-]:hover {
+            background: #F04B0F;
+        }
+
+        /*
+         owl
+        ============================*/
+
+        .related-pro-owl {
+            position: relative;
+        }
+
+        .related-pro-owl .owl-nav {
+            display: inline-flex;
+            position: absolute;
+            right: 14px;
+        }
+
+        .related-pro-owl .owl-prev {
+            margin-right: 10px;
+        }
+
+        .related-pro-owl .owl-nav i {
+            background: #f04b0f;
+            color: #fff;
+            border: 1px solid #f04b0f;
+            font-size: 15px;
+            padding: 5px;
+            text-align: center;
+            width: 25px;
+            -webkit-transition: all 0.4s ease 0s;
+            transition: all 0.4s ease 0s;
+            opacity: 0;
+        }
+
+        .related-pro-owl:hover .owl-nav i {
+            opacity: 1;
+        }
+
+        .related-pro-owl .owl-nav i:hover {
+            background: #2B2A2A;
+            border: 1px solid #2B2A2A;
+        }
+
+        .related-pro-owl .owl-stage {
+            -webkit-transition: 0.7s !important;
+            transition: 0.7s !important;
+        }
+
+
+        .all-product-list {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .all-product-list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .all-product-list ul li {
+            display: inline-block;
+            border: 1px solid #f2f2f2;
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        .all-product-list ul li .single-product1 {
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .product-details {
+            margin-top: 30px;
+        }
+
+        .table-bordered > tbody > tr > td,
+        .table-bordered > tbody > tr > th,
+        .table-bordered > tfoot > tr > td,
+        .table-bordered > tfoot > tr > th,
+        .table-bordered > thead > tr > td,
+        .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        .product-details h2,
+        .billing-form h2,
+        .order-summary h2,
+        .payment-method h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            margin-bottom: 22px;
+        }
+
+        .product-meta .table tr td {
+            padding: 15px;
+        }
+
+        .product-meta .table tr td input {
+            width: 96px;
+        }
+
+        .product-meta .table tr td select {
+            width: 96px;
+        }
+
+        .product-details p,
+        .course-details-text p {
+            margin-bottom: 22px;
+        }
+
+        .add-to-cart-button {
+            display: inline-block;
+            width: 100%;
+            margin: 5px 0 30px 0;
+        }
+
+        .product-meta li a {
+            text-transform: capitalize;
+            margin-left: 10px;
+        }
+
+        .add-to-cart-button a {
+            background: #F04B0F;
+            border-radius: 2px;
+            color: #fff;
+            font-weight: 600;
+            display: inline-block;
+            font-size: 18px;
+            padding: 8px 30px;
+        }
+
+        .move-p-description {
+            padding: 30px 30px;
+            border-radius: inherit;
+        }
+
+        a.move-p-description-title:active {
+            color: #fff;
+        }
+
+        .product-meta td a {
+            color: #464646;
+        }
+
+        .product-meta td a:hover {
+            color: #F04B0F;
+        }
+
+        .product-tab {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .product-tab li {
+            background: #F04B0F;
+            display: inline-block;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .sale-text h4 {
+            position: relative;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .sale-text h4 a {
+            color: #333;
+        }
+
+        .product-tab li a {
+            display: block;
+            padding: 10px 20px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .cart.btn.btn-primary.quote-btn {
+            background-color: #f04b0f;
+            background-image: linear-gradient(to left, #d8440e, #f48157);
+            border: none;
+            padding: 5px 10px;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: inherit;
+        }
+
+        a.move-p-description-title {
+            background: #f6f6f6;
+            color: #333 !important;
+        }
+
+        a.move-p-description-title.active {
+            background: #F04B0F;
+            color: #fff !important;
+        }
+
+        ul.product-meta-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul.product-meta-list li {
+            margin-bottom: 5px;
+        }
+
+        ul.product-meta-list li a {
+            color: #333;
+            margin-left: inherit;
+        }
+
+        ul.product-meta-list li a:hover {
+            color: #F04B0F;
+        }
+
+        .product-tab li.active:after {
+            border-color: #F04B0F transparent transparent;
+            border-style: solid;
+            position: absolute;
+            content: "";
+            border-width: 9px 6px 0;
+            left: 50%;
+            margin-left: -6px;
+            bottom: -9px;
+            text-decoration: none;
+        }
+
+        .course-details-text h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .additional-content table {
+            width: 100%;
+        }
+
+        .additional-content table tr td {
+            border-top: 1px solid #F04B0F;;
+            padding: 11px;
+            width: 75%;
+        }
+
+        .modal-body {
+            background: #f5f5f5;
+            margin: 30px;
+        }
+
+        .payment-item {
+            margin-bottom: 15px;
+        }
+
+        .payment-country select {
+            width: 100%;
+            height: 45px;
+            border: 1px solid #ddd;
+        }
+
+        .payment-option ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .payment-option ul li input {
+            margin-right: 15px;
+        }
+
+        .payment-option ul li a {
+            color: #F04B0F;
+            text-decoration: underline !important;
+        }
+
+        .card-photo {
+            border-top: 1px solid #dedede;
+            padding-top: 10px;
+        }
+
+        .card-photo ul li {
+            display: inline-block;
+            margin-right: 15px;
+            padding-top: 5px;
+        }
+
+        .card-photo ul li img {
+            width: 60px;
+            height: 40px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+
+        .card-photo ul li img:hover {
+            border: 1px solid #F04B0F;
+        }
+
+        .card-number input {
+            width: 100%;
+            height: 40px;
+            text-indent: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .expiration ul li {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .expiration ul li input {
+            width: 100%;
+            height: 40px;
+            text-indent: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .security input {
+            width: 100%;
+            height: 40px;
+            text-indent: 10px;
+            border: 1px solid #ddd;
+        }
+
+    </style>
+    <!--banner area start-->
+    <div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner">
+                        <div class="text">
+                            <nav aria-label="breadcrumb-nav">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Single supply</li>
+                                </ol>
+                            </nav>
+                            <h1>Single supply</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--banner area end-->
+    {% if message %}
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            {{ message }}
+        </div>
+    {% endif %}
+    <!-- Single Product Start -->
+    <div class="single-product-page mt_30">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sm-6">
+                    <div class="all-product-image owl-carousel">
+                        <a href="img/car.png" data-lightbox="lightbox-item">
+                            <div class="single-product-image"
+                                 style="background-image: url('{% static 'img/slide5.jpg' %}')"></div>
+                        </a>
+                        <a href="img/car.png" data-lightbox="lightbox-item">
+                            <div class="single-product-image"
+                                 style="background-image: url('{% static 'img/slide5.jpg' %}')"></div>
+                        </a>
+                        <a href="img/car.png" data-lightbox="lightbox-item">
+                            <div class="single-product-image"
+                                 style="background-image: url('{% static 'img/slide5.jpg' %}')"></div>
+                        </a>
+                    </div>
+                    <div class="all-product-list">
+                        <ul>
+                            <li>
+                                <a href="img/car.png" data-lightbox="lightbox-item">
+                                    <div class="single-product1"
+                                         style="background-image: url('{% static 'img/slide5.jpg' %}')"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="img/car.png" data-lightbox="lightbox-item">
+                                    <div class="single-product1"
+                                         style="background-image: url('{% static 'img/slide5.jpg' %}')"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="img/car.png" data-lightbox="lightbox-item">
+                                    <div class="single-product1"
+                                         style="background-image: url('{% static 'img/slide5.jpg' %}')"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- right filter -->
+                {% include 'home/right_filter.html' %}
+                <div class="col-md-12">
+
+                    <div class="course-tab product-tab pt_50">
+                        <ul id="tabs" class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a id="tab-A" href="#pane-A" class="move-p-description-title active" data-toggle="tab"
+                                   role="tab">About the owner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="tab-B" href="#pane-B" class="move-p-description-title" data-toggle="tab"
+                                   role="tab">Availability</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="tab-C" href="#pane-C" class="move-p-description-title" data-toggle="tab"
+                                   role="tab"> ({{ supply.countreview }} ) Ratings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="tab-D" href="#pane-D" class="move-p-description-title" data-toggle="tab"
+                                   role="tab">Description</a>
+                            </li>
+                        </ul>
+
+                        <div id="content" class="tab-content" role="tablist">
+
+                            <div id="pane-A" class="move-p-description card tab-pane fade show active" role="tabpanel"
+                                 aria-labelledby="tab-A">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores pariatur nostrum
+                                quisquam nulla temporibus voluptates, ipsa molestias commodi quos maxime vitae eaque
+                                incidunt minima adipisci, vero sunt consequuntur tempora illum. Lorem ipsum dolor sit
+                                amet, consectetur adipisicing elit. Dolores pariatur nostrum quisquam nulla temporibus
+                                voluptates, ipsa molestias commodi quos maxime vitae eaque incidunt minima adipisci,
+                                vero sunt consequuntur tempora illum.
+                            </div>
+
+                            <div id="pane-B" class="move-p-description card card tab-pane fade" role="tabpanel"
+                                 aria-labelledby="tab-B">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores pariatur nostrum
+                                quisquam nulla temporibus voluptates, ipsa molestias commodi quos maxime vitae eaque
+                                incidunt minima adipisci, vero sunt consequuntur tempora illum. Lorem ipsum dolor sit
+                                amet, consectetur adipisicing elit. Dolores pariatur nostrum quisquam nulla temporibus
+                                voluptates, ipsa molestias commodi quos maxime vitae eaque incidunt minima adipisci,
+                                vero sunt consequuntur tempora illum.
+                            </div>
+                            {{ supply.user }}
+                            <div id="pane-C" class="move-p-description card card tab-pane fade" role="tabpanel"
+                                 aria-labelledby="tab-C">
+                                {% for rs in comments %}
+                                    <div class="item-s-rating border-bottom mb_30">
+                                        <div class="man-name">
+                                            <div class="photo">
+                                                <img src="img/t1.jpg" alt="">
+                                            </div>
+                                            <div class="text">
+                                                <h5>{{ rs.user.username }}</h5>
+                                                <h6> {{ rs.create_at }}</h6>
+                                                <span class="rating-stars" itemprop="ratingValue" content="5.0">
+                                            <i class="fa fa-star{% if rs.rate < 1 %}-o empty{% endif %}"></i>
+                                                        <i class="fa fa-star{% if rs.rate < 2 %}-o empty{% endif %}"></i>
+                                                        <i class="fa fa-star{% if rs.rate < 3 %}-o empty{% endif %}"></i>
+                                                        <i class="fa fa-star{% if rs.rate < 4 %}-o empty{% endif %}"></i>
+                                                        <i class="fa fa-star{% if rs.rate < 5 %}-o empty{% endif %}"></i>
+                                        </span> <br>
+                                                <span>{{ rs.subject }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="customer-say mt_20">
+                                            <div class="icon">
+                                                <i class="fa fa-quote-right" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="text">
+                                                <p>{{ rs.comment }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <form class="review-form" action="{% url 'addcomment' supply.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input name="subject" class="input" type="text" placeholder="Your subject"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="comment" class="input" placeholder="Your review"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-rating">
+                                            <strong class="text-uppercase">Your Rating: </strong>
+                                            <div class="stars">
+                                                <input type="radio" id="star5" name="rate" value="5"/><label
+                                                    for="star5"></label>
+                                                <input type="radio" id="star4" name="rate" value="4"/><label
+                                                    for="star4"></label>
+                                                <input type="radio" id="star3" name="rate" value="3"/><label
+                                                    for="star3"></label>
+                                                <input type="radio" id="star2" name="rate" value="2"/><label
+                                                    for="star2"></label>
+                                                <input type="radio" id="star1" name="rate" value="1"/><label
+                                                    for="star1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if user.id is not None %}
+                                        <button class="btn quote-text btn btn-success quote-btn ">Submit</button>
+                                    {% else %}
+                                        You must be logged in to post a review
+                                    {% endif %}
+                                </form>
+                            </div>
+                            <div id="pane-D" class="move-p-description card card tab-pane fade" role="tabpanel"
+                                 aria-labelledby="tab-D">
+                                {{ supply.description|safe }}
+                            </div>
+
+                        </div>
+                    </div>
+                    <h3 class="mb_15 mt_30">Pickup location</h3>
+                    <div class="gmap">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317718.69330340537!2d-0.3817831521916316!3d51.528307969080124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sbd!4v1615828906320!5m2!1sen!2sbd"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Single Product End -->
+
+
+
+
+    <!--Related product-->
+    <div class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="service-heading text-left mt_30 mb_20">
+                        <h3 class="mb_0">You may also like…</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for supply in supply_list %}
+                    <div class="col-lg-4 col-md-6 col-12 related-pro-owl owl-carousel mb_80">
+                        <div class="vehicles-item supply-details-item">
+                            <div class="photo-list owl-carousel">
+                                <img src="{{ supply.main_photo.url }}" alt="">
+                                <img src="{{ supply.image1.url }}" alt="">
+                                <img src="{{ supply.image2.url }}" alt="">
+                            </div>
+                            <div class="more-info supply-details-item-more">
+                                <a href="{% url 'supply-details' supply.id supply.slug %}">More info</a>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="text">
+                                        <div class="list">
+                                            <ul>
+                                                <li class="font-bold tt-product-head">{{ supply.title }}<span
+                                                        class="right">
+                                            <div class="review">
+                                                <i class="fa fa-star{% if supply.avaregereview < 1 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if supply.avaregereview < 2 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if supply.avaregereview < 3 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if supply.avaregereview < 4 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if supply.avaregereview < 5 %}-o empty{% endif %}"></i> {{ supply.avaregereview }}/{{ supply.countreview }}
+                                            </div>
+                                            </span>
+                                                </li>
+                                                <li class="li-middle">from €{{ supply.price }} per night <span
+                                                        class="right"></span></li>
+                                                <li>
+                                                    <div class="review r-bottom supply-details">
+                                                        <ul>
+                                                            <li><img src="img/icon/icon-man.png"
+                                                                     alt="">{{ supply.seats }}</li>
+                                                            <li><i class="fa fa-bed"
+                                                                   aria-hidden="true"></i> {{ supply.bearth }}</li>
+                                                            <li><i class="fa fa-map-marker"
+                                                                   aria-hidden="true"></i> {{ supply.city }}</li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!--bottom box link here-->
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="row mb_35">
+                <div class="col-12">
+                    <div class="heading border-b-dj mb_40">
+                        <h3> How it works</h3>
+                    </div>
+                </div>
+                <div class="col-md-4 mb_30">
+                    <div class="text">
+                        <div class="number">
+                            1
+                        </div>
+                        <h5>Find your ideal campervan</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem omnis eaque et, quae
+                            velit obcaecati exercitationem. Dolor consectetur nisi reiciendis commodi vero dolore quidem
+                            praesentium, excepturi deserunt cumque iusto. Earum.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb_30">
+                    <div class="text">
+                        <div class="number">
+                            2
+                        </div>
+                        <h5>Request a reservation</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem omnis eaque et, quae
+                            velit obcaecati exercitationem. Dolor consectetur nisi reiciendis commodi vero dolore quidem
+                            praesentium, excepturi deserunt cumque iusto. Earum.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb_30">
+                    <div class="text">
+                        <div class="number">
+                            3
+                        </div>
+                        <h5>Make your reservation final</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem omnis eaque et, quae
+                            velit obcaecati exercitationem. Dolor consectetur nisi reiciendis commodi vero dolore quidem
+                            praesentium, excepturi deserunt cumque iusto. Earum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Reservation Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="get" class="form-inline">
+                    <div class="modal-body">
+
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        {#                <div style="padding-left: 5px;">#}
+                        {#                    <button type="submit" class="btn btn-primary">Search</button>#}
+                        {#                </div>#}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Confirm!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Message Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="post" class="form-inline">
+                    <div class="modal-body">
+
+                        {% csrf_token %}
+                        {{ form_msg|crispy }}
+                        {#                <div style="padding-left: 5px;">#}
+                        {#                    <button type="submit" class="btn btn-primary">Search</button>#}
+                        {#                </div>#}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Confirm!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        /*!
+         * Lightbox v2.10.0
+         * by Lokesh Dhakar
+         *
+         * More info:
+         * http://lokeshdhakar.com/projects/lightbox2/
+         *
+         * Copyright 2007, 2018 Lokesh Dhakar
+         * Released under the MIT license
+         * https://github.com/lokesh/lightbox2/blob/master/LICENSE
+         *
+         * @preserve
+         */
+        !function (a, b) {
+            "function" == typeof define && define.amd ? define(["jquery"], b) : "object" == typeof exports ? module.exports = b(require("jquery")) : a.lightbox = b(a.jQuery)
+        }(this, function (a) {
+            function b(b) {
+                this.album = [], this.currentImageIndex = void 0, this.init(), this.options = a.extend({}, this.constructor.defaults), this.option(b)
+            }
+
+            return b.defaults = {
+                albumLabel: "Image %1 of %2",
+                alwaysShowNavOnTouchDevices: !1,
+                fadeDuration: 600,
+                fitImagesInViewport: !0,
+                imageFadeDuration: 600,
+                positionFromTop: 50,
+                resizeDuration: 700,
+                showImageNumberLabel: !0,
+                wrapAround: !1,
+                disableScrolling: !1,
+                sanitizeTitle: !1
+            }, b.prototype.option = function (b) {
+                a.extend(this.options, b)
+            }, b.prototype.imageCountLabel = function (a, b) {
+                return this.options.albumLabel.replace(/%1/g, a).replace(/%2/g, b)
+            }, b.prototype.init = function () {
+                var b = this;
+                a(document).ready(function () {
+                    b.enable(), b.build()
+                })
+            }, b.prototype.enable = function () {
+                var b = this;
+                a("body").on("click", "a[rel^=lightbox], area[rel^=lightbox], a[data-lightbox], area[data-lightbox]", function (c) {
+                    return b.start(a(c.currentTarget)), !1
+                })
+            }, b.prototype.build = function () {
+                if (!(a("#lightbox").length > 0)) {
+                    var b = this;
+                    a('<div id="lightboxOverlay" class="lightboxOverlay"></div><div id="lightbox" class="lightbox"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" /><div class="lb-nav"><a class="lb-prev" href="" ></a><a class="lb-next" href="" ></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div>').appendTo(a("body")), this.$lightbox = a("#lightbox"), this.$overlay = a("#lightboxOverlay"), this.$outerContainer = this.$lightbox.find(".lb-outerContainer"), this.$container = this.$lightbox.find(".lb-container"), this.$image = this.$lightbox.find(".lb-image"), this.$nav = this.$lightbox.find(".lb-nav"), this.containerPadding = {
+                        top: parseInt(this.$container.css("padding-top"), 10),
+                        right: parseInt(this.$container.css("padding-right"), 10),
+                        bottom: parseInt(this.$container.css("padding-bottom"), 10),
+                        left: parseInt(this.$container.css("padding-left"), 10)
+                    }, this.imageBorderWidth = {
+                        top: parseInt(this.$image.css("border-top-width"), 10),
+                        right: parseInt(this.$image.css("border-right-width"), 10),
+                        bottom: parseInt(this.$image.css("border-bottom-width"), 10),
+                        left: parseInt(this.$image.css("border-left-width"), 10)
+                    }, this.$overlay.hide().on("click", function () {
+                        return b.end(), !1
+                    }), this.$lightbox.hide().on("click", function (c) {
+                        return "lightbox" === a(c.target).attr("id") && b.end(), !1
+                    }), this.$outerContainer.on("click", function (c) {
+                        return "lightbox" === a(c.target).attr("id") && b.end(), !1
+                    }), this.$lightbox.find(".lb-prev").on("click", function () {
+                        return 0 === b.currentImageIndex ? b.changeImage(b.album.length - 1) : b.changeImage(b.currentImageIndex - 1), !1
+                    }), this.$lightbox.find(".lb-next").on("click", function () {
+                        return b.currentImageIndex === b.album.length - 1 ? b.changeImage(0) : b.changeImage(b.currentImageIndex + 1), !1
+                    }), this.$nav.on("mousedown", function (a) {
+                        3 === a.which && (b.$nav.css("pointer-events", "none"), b.$lightbox.one("contextmenu", function () {
+                            setTimeout(function () {
+                                this.$nav.css("pointer-events", "auto")
+                            }.bind(b), 0)
+                        }))
+                    }), this.$lightbox.find(".lb-loader, .lb-close").on("click", function () {
+                        return b.end(), !1
+                    })
+                }
+            }, b.prototype.start = function (b) {
+                function c(a) {
+                    d.album.push({
+                        alt: a.attr("data-alt"),
+                        link: a.attr("href"),
+                        title: a.attr("data-title") || a.attr("title")
+                    })
+                }
+
+                var d = this, e = a(window);
+                e.on("resize", a.proxy(this.sizeOverlay, this)), a("select, object, embed").css({visibility: "hidden"}), this.sizeOverlay(), this.album = [];
+                var f, g = 0, h = b.attr("data-lightbox");
+                if (h) {
+                    f = a(b.prop("tagName") + '[data-lightbox="' + h + '"]');
+                    for (var i = 0; i < f.length; i = ++i) c(a(f[i])), f[i] === b[0] && (g = i)
+                } else if ("lightbox" === b.attr("rel")) c(b); else {
+                    f = a(b.prop("tagName") + '[rel="' + b.attr("rel") + '"]');
+                    for (var j = 0; j < f.length; j = ++j) c(a(f[j])), f[j] === b[0] && (g = j)
+                }
+                var k = e.scrollTop() + this.options.positionFromTop, l = e.scrollLeft();
+                this.$lightbox.css({
+                    top: k + "px",
+                    left: l + "px"
+                }).fadeIn(this.options.fadeDuration), this.options.disableScrolling && a("html").addClass("lb-disable-scrolling"), this.changeImage(g)
+            }, b.prototype.changeImage = function (b) {
+                var c = this;
+                this.disableKeyboardNav();
+                var d = this.$lightbox.find(".lb-image");
+                this.$overlay.fadeIn(this.options.fadeDuration), a(".lb-loader").fadeIn("slow"), this.$lightbox.find(".lb-image, .lb-nav, .lb-prev, .lb-next, .lb-dataContainer, .lb-numbers, .lb-caption").hide(), this.$outerContainer.addClass("animating");
+                var e = new Image;
+                e.onload = function () {
+                    var f, g, h, i, j, k;
+                    d.attr({
+                        alt: c.album[b].alt,
+                        src: c.album[b].link
+                    }), a(e), d.width(e.width), d.height(e.height), c.options.fitImagesInViewport && (k = a(window).width(), j = a(window).height(), i = k - c.containerPadding.left - c.containerPadding.right - c.imageBorderWidth.left - c.imageBorderWidth.right - 20, h = j - c.containerPadding.top - c.containerPadding.bottom - c.imageBorderWidth.top - c.imageBorderWidth.bottom - 120, c.options.maxWidth && c.options.maxWidth < i && (i = c.options.maxWidth), c.options.maxHeight && c.options.maxHeight < i && (h = c.options.maxHeight), (e.width > i || e.height > h) && (e.width / i > e.height / h ? (g = i, f = parseInt(e.height / (e.width / g), 10), d.width(g), d.height(f)) : (f = h, g = parseInt(e.width / (e.height / f), 10), d.width(g), d.height(f)))), c.sizeContainer(d.width(), d.height())
+                }, e.src = this.album[b].link, this.currentImageIndex = b
+            }, b.prototype.sizeOverlay = function () {
+                this.$overlay.width(a(document).width()).height(a(document).height())
+            }, b.prototype.sizeContainer = function (a, b) {
+                function c() {
+                    d.$lightbox.find(".lb-dataContainer").width(g), d.$lightbox.find(".lb-prevLink").height(h), d.$lightbox.find(".lb-nextLink").height(h), d.showImage()
+                }
+
+                var d = this, e = this.$outerContainer.outerWidth(), f = this.$outerContainer.outerHeight(),
+                    g = a + this.containerPadding.left + this.containerPadding.right + this.imageBorderWidth.left + this.imageBorderWidth.right,
+                    h = b + this.containerPadding.top + this.containerPadding.bottom + this.imageBorderWidth.top + this.imageBorderWidth.bottom;
+                e !== g || f !== h ? this.$outerContainer.animate({
+                    width: g,
+                    height: h
+                }, this.options.resizeDuration, "swing", function () {
+                    c()
+                }) : c()
+            }, b.prototype.showImage = function () {
+                this.$lightbox.find(".lb-loader").stop(!0).hide(), this.$lightbox.find(".lb-image").fadeIn(this.options.imageFadeDuration), this.updateNav(), this.updateDetails(), this.preloadNeighboringImages(), this.enableKeyboardNav()
+            }, b.prototype.updateNav = function () {
+                var a = !1;
+                try {
+                    document.createEvent("TouchEvent"), a = !!this.options.alwaysShowNavOnTouchDevices
+                } catch (a) {
+                }
+                this.$lightbox.find(".lb-nav").show(), this.album.length > 1 && (this.options.wrapAround ? (a && this.$lightbox.find(".lb-prev, .lb-next").css("opacity", "1"), this.$lightbox.find(".lb-prev, .lb-next").show()) : (this.currentImageIndex > 0 && (this.$lightbox.find(".lb-prev").show(), a && this.$lightbox.find(".lb-prev").css("opacity", "1")), this.currentImageIndex < this.album.length - 1 && (this.$lightbox.find(".lb-next").show(), a && this.$lightbox.find(".lb-next").css("opacity", "1"))))
+            }, b.prototype.updateDetails = function () {
+                var b = this;
+                if (void 0 !== this.album[this.currentImageIndex].title && "" !== this.album[this.currentImageIndex].title) {
+                    var c = this.$lightbox.find(".lb-caption");
+                    this.options.sanitizeTitle ? c.text(this.album[this.currentImageIndex].title) : c.html(this.album[this.currentImageIndex].title), c.fadeIn("fast").find("a").on("click", function (b) {
+                        void 0 !== a(this).attr("target") ? window.open(a(this).attr("href"), a(this).attr("target")) : location.href = a(this).attr("href")
+                    })
+                }
+                if (this.album.length > 1 && this.options.showImageNumberLabel) {
+                    var d = this.imageCountLabel(this.currentImageIndex + 1, this.album.length);
+                    this.$lightbox.find(".lb-number").text(d).fadeIn("fast")
+                } else this.$lightbox.find(".lb-number").hide();
+                this.$outerContainer.removeClass("animating"), this.$lightbox.find(".lb-dataContainer").fadeIn(this.options.resizeDuration, function () {
+                    return b.sizeOverlay()
+                })
+            }, b.prototype.preloadNeighboringImages = function () {
+                if (this.album.length > this.currentImageIndex + 1) {
+                    (new Image).src = this.album[this.currentImageIndex + 1].link
+                }
+                if (this.currentImageIndex > 0) {
+                    (new Image).src = this.album[this.currentImageIndex - 1].link
+                }
+            }, b.prototype.enableKeyboardNav = function () {
+                a(document).on("keyup.keyboard", a.proxy(this.keyboardAction, this))
+            }, b.prototype.disableKeyboardNav = function () {
+                a(document).off(".keyboard")
+            }, b.prototype.keyboardAction = function (a) {
+                var b = a.keyCode, c = String.fromCharCode(b).toLowerCase();
+                27 === b || c.match(/x|o|c/) ? this.end() : "p" === c || 37 === b ? 0 !== this.currentImageIndex ? this.changeImage(this.currentImageIndex - 1) : this.options.wrapAround && this.album.length > 1 && this.changeImage(this.album.length - 1) : "n" !== c && 39 !== b || (this.currentImageIndex !== this.album.length - 1 ? this.changeImage(this.currentImageIndex + 1) : this.options.wrapAround && this.album.length > 1 && this.changeImage(0))
+            }, b.prototype.end = function () {
+                this.disableKeyboardNav(), a(window).off("resize", this.sizeOverlay), this.$lightbox.fadeOut(this.options.fadeDuration), this.$overlay.fadeOut(this.options.fadeDuration), a("select, object, embed").css({visibility: "visible"}), this.options.disableScrolling && a("html").removeClass("lb-disable-scrolling")
+            }, new b
+        });
+        //# sourceMappingURL=lightbox.min.map
+        $(document).ready(function () {
+
+// Product Image  Crousel
+            $('.all-product-image').owlCarousel({
+                loop: true,
+                autoplay: true,
+                dots: false,
+                navigation: false,
+                responsiveClass: true,
+                navText: [
+                    '<i class="fa fa-angle-left"></i>',
+                    '<i class="fa fa-angle-right"></i>'
+                ],
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    600: {
+                        items: 1,
+                        nav: true
+                    },
+                    1000: {
+                        items: 1,
+                        nav: true,
+                        loop: true
+                    }
+                }
+            });
+
+        });
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $('#myModal1').on('shown.bs.modal', function () {
+            $('#myInput1').trigger('focus')
+        })
+
+    </script>
+{% endblock %}

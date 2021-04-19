@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | list page{% endblock title%}
+{% block content %}
+<script>
+    $( function() {
+        $( "#accordion" ).accordion();
+    } );
+</script>
+<!--Form Area-->
+<div class="form-area pt_100 pb_100" style="background-image: url('{% static 'img/slide1.jpg' %}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-12">
+                <div class="text mt_tt_mb">
+                    <h1>Rent out your campervan, motorhome or caravan easily</h1>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 col-12 right-calculate-form">
+                <form action="form4">
+                    <div class="row">
+                        <div class="col-12">
+                            <span class="form-group-headin cb">Calculate what you can earn per week</span>
+                            <div class="form-groups cal">
+                                <select class="js-example-basic-single" name="state">
+                                    <option value="OF">Choose any type</option>
+                                    ...
+                                    <option value="WY">Motorhome</option>
+                                    <option value="WY">Caravan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-groups cal">
+                                <select class="js-example-basic-single" name="state">
+                                    <option value="OF">Choose berths...</option>
+                                    ...
+                                    <option value="WY">1 berth</option>
+                                    <option value="WY">2 berths</option>
+                                    <option value="WY">3 berths</option>
+                                    <option value="WY">4 berths</option>
+                                    <option value="WY">5 berths</option>
+                                    <option value="WY">6 berths</option>
+                                    <option value="WY">7 berths</option>
+                                    <option value="WY">8 berths</option>
+                                    <option value="WY">9 berths</option>
+                                    <option value="WY">10 berths</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-groups pb0-tt cal">
+                                <select class="js-example-basic-single" name="state">
+                                    <option value="OF">Choose year...</option>
+                                    ...
+                                    <option value="WY">Year of build 2019</option>
+                                    <option value="WY">Year of build 2018</option>
+                                    <option value="WY">Year of build 2017</option>
+                                    <option value="WY">Year of build 2016</option>
+                                    <option value="WY">Year of build 2015</option>
+                                    <option value="WY">Year of build 2014</option>
+                                    <option value="WY">Year of build 2013</option>
+                                    <option value="WY">Year of build 2012</option>
+                                    <option value="WY">Year of build 2011</option>
+                                    <option value="WY">Year of build 2010</option>
+                                    <option value="WY">Year of build 2009</option>
+                                    <option value="WY">Year of build 2008</option>
+                                    <option value="WY">Year of build 2007</option>
+                                    <option value="WY">Year of build 2006</option>
+                                    <option value="WY">Year of build 2005</option>
+                                    <option value="WY">Year of build 2004</option>
+                                    <option value="WY">Year of build 2003</option>
+                                    <option value="WY">Year of build 2002</option>
+                                    <option value="WY">Year of build 2001</option>
+                                    <option value="WY">Year of build 2000</option>
+                                    <option value="WY">Year of build 1999</option>
+                                    <option value="WY">Year of build 1998</option>
+                                    <option value="WY">Year of build 1997</option>
+                                    <option value="WY">Year of build 1996</option>
+                                    <option value="WY">Year of build 1995</option>
+                                    <option value="WY">Year of build 1994</option>
+                                    <option value="WY">Year of build 1993</option>
+                                    <option value="WY">Year of build 1992</option>
+                                    <option value="WY">Year of build 1991</option>
+                                    <option value="WY">Year of build 1990</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-groups cal">
+                                <button type="submit" class="btn btn-primary booking-btn calculate-form" name="form1"><i class="fa fa-search" aria-hidden="true"></i> Rental vehicles</button>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <h5><a href="">I want more information <i class="fa fa-angle-right"></i></a></h5>
+                            <h5><a href="">I want to rent a vehicle <i class="fa fa-angle-right"></i></a></h5>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <!--Review area-->
+   <div class="star-review-area text-center">
+    <div class="review">
+        <ul>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
+            <li class="color-white">Rating:9.0 out of</li>
+            <li><a href="">25536 experiences</a></li>
+        </ul>
+    </div>
+</div>
+    <!--   vehicle start-->
+    <div class="services-section text-center pt_80 pb_50">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <div class="headline pb_50">
+                        <p class="heading">What we offer</p>
+                        <h1>Why rent with Camptoo?</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <!--vehicle item-->
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="item lisit-my mb_30" data-toggle="modal" data-target="#exampleModalLong">
+                        <div class="icon">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="text">
+                            Most trusted platform in Australia
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Most trusted platform in Australia</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    With more than 5,000 motorhomes, caravans and campers in Australia and Europe, Camptoo is one of the largest private rental platforms for RV’s in the world. Ranked No.1 trusted provider of private RV hire services, Camptoo is the place for renters to book a motorhome, campervan or caravan. This means that you’ll receive bookings year-round and can be fully booked for 20 weeks or more if you wish!
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--vehicle item-->
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="item lisit-my mb_30" data-toggle="modal" data-target="#exampleModalLong2">
+                        <div class="icon">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </div>
+                        <div class="text">
+                            Range of fully insured options
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Range of fully insured options</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Je camper kun je voor de particuliere verhuur verzekeren bij o.a. Aveco, de NKC (Nederlandse Kampeerauto Club) en NAG direct. Om te mogen verhuren via Camptoo dien je verzekerd te zijn voor particuliere verhuur. Dit is een aanvullende dekking op je basis verzekering. Daarbij betaal je dan een hogere premie per jaar en in ruil daarvoor is je camper verzekerd tijdens verhuur.
+
+                                    Ook voor campers en caravans ouder dan 15 jaar biedt NAG direct samen met Camptoo een verhuur verzekering op maat aan. Deze heeft de beste dekking voor jonge én oude voertuigen, exclusief via Camptoo. Wij hebben we de verschillende opties op een rijtje gezet zodat jij eenvoudig kan bepalen wat voor jou de beste optie is.
+                                    <a href="">Click here for more information about our insurance options</a>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--vehicle item-->
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="item lisit-my mb_30" data-toggle="modal" data-target="#exampleModalLong3">
+                        <div class="icon">
+                            <i class="fa fa-umbrella" aria-hidden="true"></i>
+                        </div>
+                        <div class="text">
+                            Renting becomes exciting instead of scary
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalLong3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Renting becomes exciting instead of scary</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Renting out your vehicle for the first time can be scary, we understand that more than anyone. That’s why we offer personal support during the whole process: from the start of the booking to after the renters have returned, our support team is available 24/7. Camptoo’s rental platform has been developed in cooperation with a community of owners like you, and we’ve been constantly improving since setting it up in 2014. We have created guides and tips based on everything we’ve learned from thousands of experiences - see here. All renters are screened beforehand. All in all, you have nothing to worry about!
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--vehicle item-->
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="item lisit-my mb_30" data-toggle="modal" data-target="#exampleModalLong4">
+                        <div class="icon">
+                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        </div>
+                        <div class="text">
+                            Advertise for free and on your own terms
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalLong4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Advertise for free and on your own terms</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    It’s completely free to create an advertisement and receive rental requests. You’re the one who decides how much you’d like to earn and which requests you accept. Camptoo doesn’t earn anything until you have started earning. We get a 15% commission on the rental costs: fair and simple.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--EASY AND SAFE-->
+    <div class="services-section bgwhite pt_80 pb_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="headline pb_50">
+                        <p class="heading">EASY AND SAFE</p>
+                        <h1>{{safe.title}}</h1>
+                    </div>
+                    <div class="text">
+                        {{safe.overview|safe}}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="image-tt pb_50">
+                        <img src="{{safe.image.url}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+  <!--Video popup start-->
+  <div class="holy-day-area pb_50 pt_80 bgf6">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="headline pb_50">
+                    <p class="heading">Meet our owners</p>
+                    <h1>Hear it from our community</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12  video-popup owl-carousel">
+
+                {% for video in videos %}
+                <!-- item-->
+                <div class="card item mb_30">
+                    <div class="card-body video-pop">
+
+                        <div class="content-tt">
+                            <div class="holy-day-item text-center">
+                                <div class="photo-in">
+                                    <div class=" video-pop" >
+                                        <div  class="social--tt " style=''>
+                                           
+                                            <video  width="500" height="500" class="" controls >
+                                                <source src="{{video.video.url}}" type="video/mp4">
+                                                <!-- <b>{{video.title}}</b> -->
+                                                </video>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text">
+                                    <h5>{{video.title}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <!-- item-->
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!--About us-->
+ <div class="services-section bgwhite pt_80 pb_50">
+    <div class="container">
+       
+        <div class="row">
+            
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="image-tt pb_50">
+                    <img src="{{about.image.url}}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="headline pb_35">
+                    <p class="heading">About us</p>
+                    <h1>{{about.title}}</h1>
+                </div>
+                <div class="text">
+                    {{about.overview|safe}}
+                    <span class="quote-text"><a class="btn btn-primary quote-btn mt_10" href="{% url 'agents' %}" role="button">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></span>
+                </div>
+            </div>
+         
+        </div>
+        
+    </div>
+</div>
+  <!--Just try it!-->
+  <div class="services-section bgf6 pt_80 pb_50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="headline pb_35">
+                    <p class="heading">Just try it!</p>
+                    <h1>Just try it!</h1>
+                </div>
+                <div class="text">
+                    <h5 class="mb_30">Don't miss out on bookings, renters often book well in advance of the holiday periods. Start sharing your camping pleasure.</h5>
+                    <p>Create an advertisement free of obligation in less than 10 minutes, meet interested renters and decide for yourself who you are happy to hire your vehicle to. Do you want to give it a try?</p>
+                    <span class="quote-text"><a class="btn btn-primary quote-btn mt_10 mb_20" href="{% url 'supply' %}" role="button">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></span>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="image-tt pb_50">
+                    <img src=" {% static 'img/car-1.jpeg' %} " alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--faq area-->
+    <!--faq area-->
+    <div class="faq-area bgwhite">
+        <div class="container menu-horizontal pt_80 pb_80">
+            <div class="row text-center">
+                <div class="col-12">
+                    <div class="headline pb_50">
+                        <p class="heading">We’ve got the answers</p>
+                        <h1>FAQs</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div id="accordion">
+                        {% for rs in faq %}
+                            <h3>{{ rs.title }}</h3>
+                            <div>
+                                <p>
+                                    {{ rs.description  }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+           
+
+        </div>
+    </div>
+   
+
+      <!--contact us-->
+      <div class="problem-section bgf6 pt_80 pb_30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="image-tt pb_50">
+                        <img src=" {{message.image.url}}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="headline pb_35">
+                        <p class="heading">We are always here for you!</p>
+                        <h1>{{message.title}}</h1>
+                    </div>
+                    <div class="text">
+                        <a href="tel:+31 6 123456789" class="tt-phone">{{message.phone}}</a>
+                        <h4>Send us a message</h4>
+                        <span class="quote-text"><a class="btn btn-primary quote-btn mt_10" href="{% url 'contact' %}" role="button">Contact form <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
