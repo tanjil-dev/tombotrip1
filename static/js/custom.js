@@ -132,7 +132,20 @@
 
         //faq collapse
         $('.collapse').collapse();
+        alert('yeah');
+    $("#id_start_date,#id_end_date ").datepicker({
+        onSelect: function (){
 
+    // Date will give time difference in miliseconds, that is why we divide with 1000*60*60*24
+
+    var firstday = new Date($("i#d_start_date").val().split("/").reverse().join(","));
+    var lastday = new Date($("#id_start_date").val().split("/").reverse().join(",");
+    alert('got');
+    var price=$("#totaldays").attr("data-id")
+    var cost= ((lastday - firstday) / 86400000)*price;
+    $("#totaldays").val(cost);
+  }
+});
 
 
 
