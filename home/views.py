@@ -174,7 +174,8 @@ class SupplyDetails(View):
             'is_favourite':is_favourite,
             'supply_list':supply_list,
             'form': self.my_form,
-            'form_msg':self.message_form
+            'form_msg':self.message_form,
+            'price':ProductAttribute.objects.get(supply=supply).price
         }
         return render(request, template_name=self.template_name, context=context)
 

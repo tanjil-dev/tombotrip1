@@ -144,11 +144,11 @@ class Reservation(models.Model):
     def __str__(self):
         return self.location
 
-class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    supply = models.ForeignKey(Supply, on_delete=models.DO_NOTHING)
-    time = models.DateField()
-    message = models.CharField(max_length=150)
+# class Message(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+#     supply = models.ForeignKey(Supply, on_delete=models.DO_NOTHING)
+#     time = models.DateField()
+#     message = models.CharField(max_length=150)
 
 class CommentForm(ModelForm):
     class Meta:

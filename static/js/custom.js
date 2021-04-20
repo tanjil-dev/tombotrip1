@@ -132,7 +132,7 @@
 
         //faq collapse
         $('.collapse').collapse();
-        alert('yeah');
+
     $("#id_start_date,#id_end_date ").datepicker({
         onSelect: function (){
 
