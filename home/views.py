@@ -43,22 +43,57 @@ def favourite(request,id):
         supply.favourite.add(request.user)
     return HttpResponseRedirect('/favourites')        
 def index(request):
-    exp = Experience.objects.all()
-    supply = Supply.objects.all().order_by('id')[:3]
-    user = request.user
-    # sup = Supply.objects.all()
-    quote = Ownerquote.objects.filter()
-    # is_favourite = False
-    # if sup.favourite.filter(id=request.user.id).exists():
-    #     is_favourite = True
+    if request.GET:
+        adress= request.GET.get('adress', '')
+        pickupDate = request.GET.get('pick_up', '')
+        dropoffDate = request.GET.get('drop_off', '')
+        exp = Experience.objects.all()
+        supply=Supply.objects.all()
+        if adress!='':
+            supply=supply.filter(city=adress)
 
-    context = {
-        'exp':exp,
-        'supply':supply,
-        # 'is_favourite':is_favourite,
-        'quote':quote
-    }
+        if pickupDate!="" and dropoffDate!="":
+            pickupDate=dt.strptime(pickupDate, "%m/%d/%Y").strftime("%Y-%m-%d")
+            pickupDate=dt.strptime(pickupDate, "%Y-%m-%d")
+            dropoffDate=dt.strptime(dropoffDate, "%m/%d/%Y").strftime("%Y-%m-%d")
+            dropoffDate=dt.strptime(dropoffDate, "%Y-%m-%d")
+
+            supply = supply.filter(~Q(reservation__start_date__range=(pickupDate, dropoffDate),reservation__end_date__range=(pickupDate, dropoffDate))).order_by('id')
+            # another=Supply.objects.filter(reservation__start_date__range=(pickupDate, dropoffDate),reservation__end_date__range=(pickupDate, dropoffDate),reservation__confirm=True).order_by('id')
+            # supply=supply.objects.filter()
+        user = request.user
+        # sup = Supply.objects.all()
+        quote = Ownerquote.objects.filter()
+        # is_favourite = False
+        # if sup.favourite.filter(id=request.user.id).exists():
+        #     is_favourite = True
+
+        context = {
+            'exp': exp,
+            'supply': supply,
+            # 'is_favourite':is_favourite,
+            'quote': quote
+        }
+
+    else:
+        exp = Experience.objects.all()
+        supply = Supply.objects.all().order_by('id')[:3]
+        user = request.user
+        # sup = Supply.objects.all()
+        quote = Ownerquote.objects.filter()
+        # is_favourite = False
+        # if sup.favourite.filter(id=request.user.id).exists():
+        #     is_favourite = True
+
+        context = {
+            'exp': exp,
+            'supply': supply,
+            # 'is_favourite':is_favourite,
+            'quote': quote
+        }
     return render(request,'home/home.html',context)
+
+
 def supply(request):
     supply = Supply.objects.all()
     # sup = Supply.objects.all().order_by('-id').distinct()
