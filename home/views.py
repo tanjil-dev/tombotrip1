@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
 from django.http import JsonResponse, Http404, HttpResponseForbidden
+from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 from datetime import datetime as dt
@@ -113,17 +114,27 @@ def supply(request):
 class ReservationView(View):
     template_name = "user/reservation.html"
     my_form = ReservationForm
+    data = None
+    total_unreserved = None
+    msg = None
+    page_obj = None
+    page_number = 0
     def get(self, request):
-        data = Reservation.objects.all().order_by('-id')
-        total_unreserved = Reservation.objects.filter(confirm="False").count()
-        paginator = Paginator(data, 5)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        s = Reservation.objects.filter(supply__user=request.user)
+        if s:
 
+            self.data = Reservation.objects.all().order_by('-id')
+            self.total_unreserved = Reservation.objects.filter(confirm="False").count()
+            paginator = Paginator(self.data, 5)
+            self.page_number = request.GET.get('page')
+            self.page_obj = paginator.get_page(self.page_number)
+        else:
+            msg = "No data found"
         context = {
-            'page_obj': page_obj,
+            'page_obj': self.page_obj,
             'form': self.my_form,
-            'total': total_unreserved
+            'total': self.total_unreserved,
+            'msg': self.msg
         }
         return render(request, template_name=self.template_name, context=context)
 
@@ -152,6 +163,8 @@ class SupplyDetails(View):
     my_form = SupplyDetailsForm
     message_form = MessageForm
     msg = None
+
+
     def get(self, request, slug, id):
         supply = Supply.objects.get(pk=id,slug=slug)
         comments = Rating.objects.filter(supply_id=id,status='True')
@@ -167,6 +180,8 @@ class SupplyDetails(View):
             location = request.GET['location']
             reservation = Reservation.objects.create(user=user_name, supply=supply_name, end_date=end_date, start_date=start_date, location=location)
             self.msg = "Reservation submitted"
+        else:
+            return redirect('login_form')
         context ={
             'message': self.msg,
             'supply':supply,

@@ -45,6 +45,13 @@
                     </div>
                 {% endfor %}
             {% endif %}
+
+        {% if msg %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endif %}
+
             <div class="row move-dashboard">
                 <!-- add partial sidebar -->
                 {% include 'user/sidebar.html' %}
