@@ -121,15 +121,19 @@ class ReservationView(View):
     page_number = 0
     def get(self, request):
         s = Reservation.objects.filter(supply__user=request.user)
-        if s:
+        # ss = Supply.objects.get(user=request.user)
+        # print(ss)
+        if s.count()>0:
+            # print("ss", s)
 
-            self.data = Reservation.objects.all().order_by('-id')
-            self.total_unreserved = Reservation.objects.filter(confirm="False").count()
+            self.data = s
+            self.total_unreserved = s.count()
             paginator = Paginator(self.data, 5)
             self.page_number = request.GET.get('page')
             self.page_obj = paginator.get_page(self.page_number)
+            print(self.page_obj)
         else:
-            msg = "No data found"
+            self.msg = "No data found"
         context = {
             'page_obj': self.page_obj,
             'form': self.my_form,
@@ -181,7 +185,7 @@ class SupplyDetails(View):
             reservation = Reservation.objects.create(user=user_name, supply=supply_name, end_date=end_date, start_date=start_date, location=location)
             self.msg = "Reservation submitted"
         else:
-            return redirect('login_form')
+            self.msg = "Please Login for reservation"
         context ={
             'message': self.msg,
             'supply':supply,
