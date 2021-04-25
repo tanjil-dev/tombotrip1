@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="row move-dashboard">
+        <!-- add partial sidebar -->
+        <div class="col-lg-9 col-md-7">
+
+            <div class="dashboard-body" style="position: relative; left: 250px">
+                <h3 style="text-align: center">My Add List View</h3>
+
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Camper name</th>
+                            <th>Status</th>
+                            <th>Draft</th>
+                            <th>Edit</th>
+                        </tr>
+                        {% for a in page_obj %}
+                            <tr>
+                                <td>{{ a.user }}</td>
+                                <td>{{ a.status }}</td>
+                                <td>
+                                    <a class="btn btn-outline-danger"
+                                       href="{% url 'delete-my-advertise' a.id %}">Draft!</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-warning"
+                                       href="{% url 'update-my-advertise' a.id %}">Update!</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <br>
+            <ul class="pagination justify-content-center">
+
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% if page_obj.number|add:'-4' > 1 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link">{{ i }} </a></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a>
+                    </li>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+
+<a style="position: relative; left: 800px" class="btn btn-outline-primary" href="{% url 'add-advertise' %}" role="button">Add!</a>
+
+
+            </ul>
+
+        </div>
+    </div>
+
+{% endblock content %}

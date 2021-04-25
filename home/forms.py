@@ -28,3 +28,8 @@ class ComposeForm(forms.Form):
                 attrs={"class": "form-control"}
                 )
             )
+
+class MyAdvertiseForm(forms.ModelForm):
+    class Meta:
+        model = Supply
+        fields = '__all__'

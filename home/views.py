@@ -7,7 +7,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 from datetime import datetime as dt
 
-from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm
+from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm, MyAdvertiseForm
 from .models import Experience, Supply, Rating, CommentForm, ProductAttribute, Cartypes, Reservation, Message
 
 from user.models import UserProfile
@@ -142,6 +142,53 @@ class ReservationView(View):
         }
         return render(request, template_name=self.template_name, context=context)
 
+class MyAdvertiseView(View):
+    template_name = "user/my_advertise.html"
+    form = MyAdvertiseForm
+    page_obj = None
+    def get(self, request):
+        data = Supply.objects.all()
+        paginator = Paginator(data, 5)
+        self.page_number = request.GET.get('page')
+        self.page_obj = paginator.get_page(self.page_number)
+        print(self.page_obj)
+        context = {
+            'page_obj': self.page_obj,
+            'form': self.form
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+class DeleteAdvertiseView(View):
+    template_name = "user/delete_advertise.html"
+    def get(self, request, pk):
+        data = Supply.objects.get(id=pk)
+        if request.method == "POST":
+            data.delete()
+            return redirect('my-advertise')
+        context = {
+            'item': data
+        }
+        return render(request, template_name=self.template_name, context=context)
+    def post(self, request, pk):
+        data = Supply.objects.get(id=pk)
+        data.delete()
+        return redirect('my-advertise')
+
+class AddAdvertiseView(View):
+    template_name = "user/add_advertise.html"
+    form = MyAdvertiseForm
+    def get(self, request):
+        context = {
+            'form': self.form
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request):
+        self.form = MyAdvertiseForm(request.POST)
+        if self.form.is_valid():
+            self.form.save()
+        return redirect('my-advertise')
+
 class UpdateReservationView(View):
     template_name = "user/update_reservation.html"
     form = ReservationForm
@@ -161,6 +208,26 @@ class UpdateReservationView(View):
             if self.form.is_valid():
                 self.form.save()
                 return redirect('user_reservation')
+
+class UpdateAdvertiseView(View):
+    template_name = "user/update_advertise.html"
+    form = MyAdvertiseForm
+    def get(self, request, pk):
+        supply = Supply.objects.get(id=pk)
+        self.form = MyAdvertiseForm(instance=supply)
+        context = {
+            "form": self.form
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request, pk):
+        supply = Supply.objects.get(id=pk)
+        self.form = MyAdvertiseForm(instance=supply)
+        if request.method == 'POST':
+            self.form = MyAdvertiseForm(request.POST, instance=supply)
+            if self.form.is_valid():
+                self.form.save()
+                return redirect('my-advertise')
 
 class SupplyDetails(View):
     template_name = "home/supply_details.html"

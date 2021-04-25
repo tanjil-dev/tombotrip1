@@ -18,5 +18,4 @@ urlpatterns = [
     path('supply_details/<int:id>/<slug:slug>/',SupplyDetails.as_view(), name='supply-details' ),
     path('addcomment/<int:id>/',views.addcomment,name='addcomment'),
     path('filter-data',views.filter_data,name='filter_data'),
-    # re_path(r"^(?P<username>[\w.@+-]+)", ThreadView.as_view()),
 ]
