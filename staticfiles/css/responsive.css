@@ -1,0 +1,239 @@
+@media (min-width: 1000px) {
+    .col-lg-2-5-tt {
+        max-width: 20% !important;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width:991px) {}
+
+
+@media only screen and (max-width:991px) {
+    .slicknav_menu {
+        display: block;
+    }
+
+    .menu-section-2 {
+        display: none;
+    }
+
+    .caret {
+        display: none;
+    }
+
+    .banner-area h1 {
+        padding-left: 5px;
+        font-size: 20px;
+    }
+
+    .banner-area nav {
+        margin-top: inherit;
+    }
+
+
+}
+
+@media only screen and (min-width: 768px) and (max-width:991px) {
+    .main-logo {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .main-logo a img {
+        max-height: 80px;
+    }
+
+    .header-contact {
+        text-align: center;
+    }
+
+}
+
+@media only screen and (max-width:768px) {
+    .contact-bar {
+        text-align: center;
+    }
+
+    .contact-bar-right.top-list {
+        text-align: center;
+
+    }
+
+    .contact-bar-right.top-list ul {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .contact-bar-right.top-list {
+        margin-top: 5px;
+    }
+
+    .main-logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .header-contact .header-contact-item {
+        display: block;
+        text-align: center;
+        margin-right: 0;
+        margin-bottom: 25px;
+    }
+
+    .slide-h h1 {
+        color: #fff;
+        font-family: 'Roboto Condensed', sans-serif;
+        background: #0000003d;
+        margin-bottom: 0;
+        font-size: 26px;
+        padding: 15px 10px;
+    }
+
+    .table-tt {
+        padding: 5px 0px !important;
+        font-size: 13px !important;
+        min-width: 125px;
+    }
+}
+
+@media only screen and (max-width:991px) {
+
+    .table-tt {
+        padding: 5px 0px !important;
+        font-size: 13px !important;
+        min-width: 125px;
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .abs-content {
+        position: inherit;
+    }
+
+    .well.mt_30 {
+        overflow-x: scroll;
+    }
+
+    .text.mt_tt_mb {
+        margin-top: 0px;
+    }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width:768px) {}
+
+@media only screen and (min-width: 500px) and (max-width:768px) {
+    .news-area .item .photo {
+        height: 300px;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width:499px) {
+    .news-area .item .photo {
+        height: 270px;
+    }
+}
+
+@media only screen and (min-width: 300px) and (max-width:575px) {
+    .team-item .photo {
+        background-size: contain;
+    }
+
+    .payment-photo {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 200px) and (max-width:375px) {
+    .review ul li {
+        padding: 1px;
+        font-size: 13px;
+    }
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 800px) {
+    
+    /* Force table to not be like tables anymore */
+	#no-more-tables table, 
+	#no-more-tables thead, 
+	#no-more-tables tbody, 
+	#no-more-tables th, 
+	#no-more-tables td, 
+	#no-more-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#no-more-tables tr { border: 1px solid #ccc; }
+ 
+	#no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	#no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(data-title); }
+}
+
+
+
+
+
+
+
+
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 50%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 33%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+Put it to use !

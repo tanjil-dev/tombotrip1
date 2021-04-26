@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Success page styling -->
+    <style>
+
+        h4 {
+            font-family: 'Fjalla One', sans-serif;
+            font-weight: 100;
+            font-size: 24px;
+        }
+
+        #box {
+            max-width: 500px;
+            margin: 0 auto;
+            margin-top: 100px;
+            padding: 30px;
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 1px 3px 0 #dce0e6;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+
+        .myButton {
+            background-color: #72cca7;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Verdana;
+            font-size: 17px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 0;
+            text-decoration: none;
+            text-align: center;
+            transition: .3s;
+        }
+
+        .myButton:hover {
+            opacity: .6;
+        }
+
+        #succes-icon {
+            width: 100px;
+
+        }
+
+    </style>
+
+    <div id="box">
+
+        <h4>Thank you for your payment of ${{ amount }}!</h4>
+        <hr>
+        <a class="myButton" href="{% url 'payment' %}">&#x2190;Back to payment page for another transaction?</a>
+    </div>
+{% endblock content %}
