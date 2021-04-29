@@ -238,8 +238,12 @@
                         <div class="vehicles-item">
                             <div class="photo-list owl-carousel">
                                 <img src="{{supply.main_photo.url}}" alt="">
-                                <img src="{{supply.image1.url}}" alt="">
-                                <img src="{{supply.image2.url}}" alt="">
+{#                                {% if supply.image1.url %}#}
+{#                                    <img src="{{ supply.image1.url }}" alt="">#}
+{#                                {% endif %}#}
+{#                                {% if supply.image2.url %}#}
+{#                                    <img src="{{ supply.image2.url }}" alt="">#}
+{#                                {% endif %}#}
                             </div>
                             <div class="card">
                                 <div class="card-body">

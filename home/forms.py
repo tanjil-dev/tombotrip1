@@ -13,6 +13,10 @@ class SupplyDetailsForm(forms.Form):
     )
     location = forms.CharField()
 
+    traveller = forms.IntegerField()
+
+    phone = forms.CharField(max_length=11)
+
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
@@ -21,6 +25,7 @@ class ReservationForm(forms.ModelForm):
 
 class MessageForm(forms.Form):
     message = forms.CharField()
+    email = forms.EmailField()
 
 class ComposeForm(forms.Form):
     message = forms.CharField(
@@ -33,3 +38,8 @@ class MyAdvertiseForm(forms.ModelForm):
     class Meta:
         model = Supply
         fields = '__all__'
+        exclude = ('user', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10', 'image11', 'image12', 'image13', 'image14', 'image15', 'image16', 'image17')
+        # widgets = {
+        #     'description': Textarea(attrs={'cols': 25, 'rows': 6}),
+        #     'visit_date': DateInput(attrs={"type": 'date'}),
+        # }
