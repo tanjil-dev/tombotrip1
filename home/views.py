@@ -22,6 +22,8 @@ from django.template.loader import render_to_string
 from django.db.models import  Q
 from django.views import View
 from django.views.generic.list import ListView
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def test(request):
@@ -184,9 +186,42 @@ class AddAdvertiseView(View):
         return render(request, template_name=self.template_name, context=context)
 
     def post(self, request):
-        self.form = MyAdvertiseForm(request.POST)
+        self.form = MyAdvertiseForm(request.POST, request.FILES)
+        supply = Supply.objects.latest('id')
+        print(supply)
         if self.form.is_valid():
-            self.form.save()
+            user = request.user
+            cartypes = self.form.cleaned_data['cartypes']
+            title = self.form.cleaned_data['title']
+            slug = self.form.cleaned_data['slug']
+            cart_title = self.form.cleaned_data['car_title']
+            city = self.form.cleaned_data['city']
+            price = self.form.cleaned_data['price']
+            status = self.form.cleaned_data['status']
+            main_photo = self.form.cleaned_data['main_photo']
+            image1 = self.form.cleaned_data['image1']
+            image2 = self.form.cleaned_data['image2']
+            image3 = self.form.cleaned_data['image3']
+            seats = self.form.cleaned_data['seats']
+            bearth = self.form.cleaned_data['bearth']
+            feature = self.form.cleaned_data['features']
+            description = self.form.cleaned_data['description']
+            facilities = self.form.cleaned_data['description']
+            houserules = self.form.cleaned_data['houserules']
+            min_reserve_period = self.form.cleaned_data['min_reserver_period']
+            pick_up_from = self.form.cleaned_data['pick_up_from']
+            drop_of_before = self.form.cleaned_data['drop_of_before']
+            favourite = self.form.cleaned_data['favourite']
+            is_published = self.form.cleaned_data['is_published']
+            # ct = Cartypes.objects.filter(title=cartypes)
+            # ur = User.objects.filter(username=favourite)
+            supply = Supply.objects.create(user=user, title=title, slug=slug, car_title=cart_title, city=city, price=price, status=status, main_photo=main_photo, image1=image1, image2=image2, image3=image3, seats=seats, bearth=bearth, features=feature, description=description, failities=facilities, houserules=houserules, min_reserver_period=min_reserve_period, pick_up_from=pick_up_from, drop_of_before=drop_of_before, is_published=is_published)
+            for u in cartypes:
+                supply.cartypes.add(u)
+            for u in favourite:
+                supply.favourite.add(u)
+            ProductAttribute.objects.create(supply=supply, price=self.form.cleaned_data['price'])
+
         return redirect('my-advertise')
 
 class UpdateReservationView(View):
@@ -249,8 +284,19 @@ class SupplyDetails(View):
             start_date = request.GET['start_date']
             end_date = request.GET['end_date']
             location = request.GET['location']
-            reservation = Reservation.objects.create(user=user_name, supply=supply_name, end_date=end_date, start_date=start_date, location=location)
+            traveller = request.GET['traveller']
+            phone = request.GET['phone']
+            reservation = Reservation.objects.create(user=user_name, supply=supply_name, end_date=end_date, start_date=start_date, location=location, traveller=traveller, phone=phone)
             self.msg = "Reservation submitted"
+
+            message = "We have received your reservation in location: " + location + ". Please wait for supplier confirmation: " + str(supply)
+
+            send_mail('Tombotrip reservation form submitted',
+                      message,
+                      settings.EMAIL_HOST_USER,
+                      ['tanzil.ovi578@gmail.com'],
+                      fail_silently=False)
+
         else:
             self.msg = "Please Login for reservation"
         context ={
@@ -261,7 +307,7 @@ class SupplyDetails(View):
             'supply_list':supply_list,
             'form': self.my_form,
             'form_msg':self.message_form,
-            'price':ProductAttribute.objects.get(supply=supply).price
+            # 'price':ProductAttribute.objects.get(supply=supply).price
         }
         return render(request, template_name=self.template_name, context=context)
 
@@ -277,6 +323,12 @@ class SupplyDetails(View):
             fromUser = request.user
             messages = request.POST['message']
             sendMessage = Message.objects.create(toUser=toUser, fromUser=fromUser,  message=messages)
+            self.msg = "Message submitted"
+        else:
+            toUser = supply.user
+            email = request.POST['email']
+            messages = request.POST['message']
+            sendMessage = Message.objects.create(toUser=toUser, message=messages, email=email)
             self.msg = "Message submitted"
         context = {
             'message': self.msg,
@@ -423,7 +475,7 @@ class MessageListView(ListView):
         return context
 
 def message_create(request,username):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         # create a form instance and populate it with data from the request:
         toUser = User.objects.get(username=username)
         fromUser = request.user

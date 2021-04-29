@@ -110,8 +110,8 @@ class Supply(models.Model):
 class ProductAttribute(models.Model):
     supply=models.ForeignKey(Supply,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
-    transmission = models.ForeignKey(Transmission, on_delete=models.CASCADE)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE, null=True, blank=True)
+    transmission = models.ForeignKey(Transmission, on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return self.supply.title
@@ -135,12 +135,15 @@ class Rating(models.Model):
         return self.subject
 
 class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    supply=models.ForeignKey(Supply,on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    supply=models.ForeignKey(Supply,on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     location = models.CharField(max_length=50)
     confirm = models.BooleanField(null=True)
+    traveller = models.IntegerField(default=False)
+    price = models.IntegerField(default=False)
+    phone = models.CharField(max_length=11, default=False)
 
     def __str__(self):
         return self.location
@@ -163,3 +166,4 @@ class Message(models.Model):
     message=models.TextField(null=True,blank=True,default='')
     update_at = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=150, null=True, blank=True, default='')
+    email = models.EmailField(blank=True, null=True)
