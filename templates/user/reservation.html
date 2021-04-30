@@ -81,8 +81,18 @@
                                         <td>{{ a.location }}</td>
                                         <td>{{ a.confirm|default_if_none:"" }}</td>
                                         <td>
-                                            <a class="btn btn-outline-success"
+                                            {% if a.confirm == 'True' or k %}
+                                            <a class="btn btn-outline-dark"
+                                               href="{% url 'payment' %}">Pay now?</a>
+                                             {% elif a.confirm == 'False' or s %}
+                                                <a class="btn btn-outline-success"
                                                href="{% url 'update_user_reservation' a.id %}">Update!</a>
+                                             {% elif a.confirm == '' or s %}
+                                                <a class="btn btn-outline-success"
+                                               href="{% url 'update_user_reservation' a.id %}">Update!</a>
+                                              {% else %}
+                                                <span class="badge badge-danger">Approval Pending</span>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

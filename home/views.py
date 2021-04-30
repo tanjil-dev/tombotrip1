@@ -123,6 +123,7 @@ class ReservationView(View):
     page_number = 0
     def get(self, request):
         s = Reservation.objects.filter(supply__user=request.user)
+        k = Reservation.objects.filter(user=request.user)
         # ss = Supply.objects.get(user=request.user)
         # print(ss)
         if s.count()>0:
@@ -134,10 +135,19 @@ class ReservationView(View):
             self.page_number = request.GET.get('page')
             self.page_obj = paginator.get_page(self.page_number)
             print(self.page_obj)
+        elif k.count()> 0:
+            self.data = k
+            self.total_unreserved = k.count()
+            paginator = Paginator(self.data, 5)
+            self.page_number = request.GET.get('page')
+            self.page_obj = paginator.get_page(self.page_number)
+            print(self.page_obj)
         else:
             self.msg = "No data found"
         context = {
             'page_obj': self.page_obj,
+            's': s,
+            'k': k,
             'form': self.my_form,
             'total': self.total_unreserved,
             'msg': self.msg
