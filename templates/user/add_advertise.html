@@ -17,6 +17,20 @@
             </div>
         {% endfor %}
     {% endif %}
+{% if prform.errors %}
+        {% for field in prform %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in prform.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
 
 
     <form style="text-align: center" action="" method="post" enctype="multipart/form-data">
@@ -24,6 +38,7 @@
 
             {% csrf_token %}
             {{ form|crispy }}
+            {{ prform|crispy }}
 
         </div>
         <div class="modal-footer">
