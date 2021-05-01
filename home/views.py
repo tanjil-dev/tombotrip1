@@ -7,7 +7,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 from datetime import datetime as dt
 
-from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm, MyAdvertiseForm
+from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm, MyAdvertiseForm,MyProductAttributeForm
 from .models import Experience, Supply, Rating, CommentForm, ProductAttribute, Cartypes, Reservation, Message
 
 from user.models import UserProfile
@@ -191,47 +191,59 @@ class AddAdvertiseView(View):
     form = MyAdvertiseForm
     def get(self, request):
         context = {
-            'form': self.form
+            'form': self.form,
+            'prform':MyProductAttributeForm
         }
         return render(request, template_name=self.template_name, context=context)
 
     def post(self, request):
-        self.form = MyAdvertiseForm(request.POST, request.FILES)
-        supply = Supply.objects.latest('id')
-        print(supply)
-        if self.form.is_valid():
-            user = request.user
-            cartypes = self.form.cleaned_data['cartypes']
-            title = self.form.cleaned_data['title']
-            slug = self.form.cleaned_data['slug']
-            cart_title = self.form.cleaned_data['car_title']
-            city = self.form.cleaned_data['city']
-            price = self.form.cleaned_data['price']
-            status = self.form.cleaned_data['status']
-            main_photo = self.form.cleaned_data['main_photo']
-            image1 = self.form.cleaned_data['image1']
-            image2 = self.form.cleaned_data['image2']
-            image3 = self.form.cleaned_data['image3']
-            seats = self.form.cleaned_data['seats']
-            bearth = self.form.cleaned_data['bearth']
-            feature = self.form.cleaned_data['features']
-            description = self.form.cleaned_data['description']
-            facilities = self.form.cleaned_data['description']
-            houserules = self.form.cleaned_data['houserules']
-            min_reserve_period = self.form.cleaned_data['min_reserver_period']
-            pick_up_from = self.form.cleaned_data['pick_up_from']
-            drop_of_before = self.form.cleaned_data['drop_of_before']
-            favourite = self.form.cleaned_data['favourite']
-            is_published = self.form.cleaned_data['is_published']
-            # ct = Cartypes.objects.filter(title=cartypes)
-            # ur = User.objects.filter(username=favourite)
-            supply = Supply.objects.create(user=user, title=title, slug=slug, car_title=cart_title, city=city, price=price, status=status, main_photo=main_photo, image1=image1, image2=image2, image3=image3, seats=seats, bearth=bearth, features=feature, description=description, failities=facilities, houserules=houserules, min_reserver_period=min_reserve_period, pick_up_from=pick_up_from, drop_of_before=drop_of_before, is_published=is_published)
-            for u in cartypes:
-                supply.cartypes.add(u)
-            for u in favourite:
-                supply.favourite.add(u)
-            ProductAttribute.objects.create(supply=supply, price=self.form.cleaned_data['price'])
-
+        try:
+            self.form = MyAdvertiseForm(request.POST, request.FILES)
+            prform = MyProductAttributeForm(request.POST)
+            supply = Supply.objects.latest('id')
+            print(supply)
+            if self.form.is_valid() and prform.is_valid():
+                user = request.user
+                cartypes = self.form.cleaned_data['cartypes']
+                # title = self.form.cleaned_data['title']
+                # slug = self.form.cleaned_data['slug']
+                # cart_title = self.form.cleaned_data['car_title']
+                # city = self.form.cleaned_data['city']
+                # # price = self.form.cleaned_data['price']
+                # status = self.form.cleaned_data['status']
+                # main_photo = self.form.cleaned_data['main_photo']
+                # image1 = self.form.cleaned_data['image1']
+                # image2 = self.form.cleaned_data['image2']
+                # image3 = self.form.cleaned_data['image3']
+                # seats = self.form.cleaned_data['seats']
+                # bearth = self.form.cleaned_data['bearth']
+                # feature = self.form.cleaned_data['features']
+                # description = self.form.cleaned_data['description']
+                # facilities = self.form.cleaned_data['description']
+                # houserules = self.form.cleaned_data['houserules']
+                # min_reserve_period = self.form.cleaned_data['min_reserver_period']
+                # pick_up_from = self.form.cleaned_data['pick_up_from']
+                # drop_of_before = self.form.cleaned_data['drop_of_before']
+                favourite = self.form.cleaned_data['favourite']
+                # is_published = self.form.cleaned_data['is_published']
+                # ct = Cartypes.objects.filter(title=cartypes)
+                # ur = User.objects.filter(username=favourite)
+                supply = self.form.save(commit=False)
+                supply.user=user
+                supply.save()
+                supply.save()
+                for u in cartypes:
+                    supply.cartypes.add(u)
+                for u in favourite:
+                    supply.favourite.add(u)
+                pratr=prform.save(commit=False)
+                pratr.supply=supply
+                pratr.save()
+            else:
+                print(self.form.errors.as_data())
+                print(prform.errors.as_data())
+        except Exception as ex:
+            print(ex)
         return redirect('my-advertise')
 
 class UpdateReservationView(View):

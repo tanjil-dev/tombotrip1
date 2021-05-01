@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from home.models import Supply, Reservation
+from home.models import Supply, Reservation,ProductAttribute
 
 
 class SupplyDetailsForm(forms.Form):
@@ -34,11 +34,16 @@ class ComposeForm(forms.Form):
                 )
             )
 
+class MyProductAttributeForm(forms.ModelForm):
+    class Meta:
+        model = ProductAttribute
+        exclude=('supply',)
+
 class MyAdvertiseForm(forms.ModelForm):
     class Meta:
         model = Supply
         fields = '__all__'
-        exclude = ('user', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10', 'image11', 'image12', 'image13', 'image14', 'image15', 'image16', 'image17')
+        exclude = ('user','price', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10', 'image11', 'image12', 'image13', 'image14', 'image15', 'image16', 'image17')
         # widgets = {
         #     'description': Textarea(attrs={'cols': 25, 'rows': 6}),
         #     'visit_date': DateInput(attrs={"type": 'date'}),
