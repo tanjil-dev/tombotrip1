@@ -309,6 +309,16 @@ class SupplyDetails(View):
 
         else:
             self.msg = "Please Login for reservation"
+        price = 0
+        try:
+            print(supply.id)
+            atr = ProductAttribute.objects.all()
+            for at in atr:
+                print(at.id)
+            price = ProductAttribute.objects.filter(supply=supply).order_by('-id')[0].price
+            print(price)
+        except Exception as ex:
+            print(ex)
         context ={
             'message': self.msg,
             'supply':supply,
@@ -317,8 +327,9 @@ class SupplyDetails(View):
             'supply_list':supply_list,
             'form': self.my_form,
             'form_msg':self.message_form,
-            # 'price':ProductAttribute.objects.get(supply=supply).price
+            'price':price,
         }
+
         return render(request, template_name=self.template_name, context=context)
 
     def post(self, request, slug, id):

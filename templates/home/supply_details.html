@@ -2,6 +2,7 @@
 {% block content %}
     {% load static %}
     {% load crispy_forms_tags %}
+
     <style>
 
         .lb-loader, .lightbox {
@@ -689,6 +690,26 @@
         }
 
     </style>
+<script>
+      $( document ).ready(function() {
+        alert('hi');
+        $("#id_start_date").datepicker();
+        $("#id_end_date").datepicker();
+        $("#id_start_date, #id_end_date").datepicker({
+            onSelect: function (){
+
+    // Date will give time difference in miliseconds, that is why we divide with 1000*60*60*24
+
+    var firstday = new Date($("#id_start_date").val().split("/").reverse().join(","));
+    var lastday = new Date($("#id_end_date").val().split("/").reverse().join(",");
+    days=(lastday - firstday) / 86400000;
+    price=$("#total_price").attr("data-attr")
+    $("#total_price").text(days*price);
+
+  }
+});
+});
+    </script>
     <!--banner area start-->
     <div class="banner-area" style="background-image: url('{% static 'img/slide5.jpg' %}')">
         <div class="overlay"></div>
@@ -1024,8 +1045,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <label for="totaldays">Total Cost</label>
-                        <input type="text" name="totaldays" id="totaldays" data-attr="{{ price }}"/>
+                        <label >Total Cost</label>
+                        <p id="total_price" data-attr="{{price}}">{{price}}</p>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Confirm!</button>
                     </div>
