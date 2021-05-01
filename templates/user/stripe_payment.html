@@ -234,13 +234,13 @@
 
 </style>
 
-<form action="{% url 'payment-charge' %}" method="post" id="payment-form">
+<form action="{% url 'payment-charge' s_id %}" method="post" id="payment-form">
     {% csrf_token %}
     <div class="form-field-12">
         <label for="amount">Choose Amount:</label>
         <br>
         <br>
-        <input type="text" name="amount" placeholder="Amount...">
+        <input type="text" value="{{ price }}" name="amount" placeholder="Amount..." readonly>
     </div>
 
     <div class="form-field-6">

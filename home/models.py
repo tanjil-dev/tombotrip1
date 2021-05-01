@@ -144,6 +144,7 @@ class Reservation(models.Model):
     traveller = models.IntegerField(default=False)
     price = models.IntegerField(default=False)
     phone = models.CharField(max_length=11, default=False)
+    paid = models.BooleanField(null=True)
 
     def __str__(self):
         return self.location

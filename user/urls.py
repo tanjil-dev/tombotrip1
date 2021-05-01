@@ -14,8 +14,8 @@ urlpatterns = [
     path('profile/reservation/update/<str:pk>/', UpdateReservationView.as_view() ,name='update_user_reservation'),
     path('my_advertise/delete/<str:pk>/', DeleteAdvertiseView.as_view() ,name='delete-my-advertise'),
     path('my_advertise/update/<str:pk>/', UpdateAdvertiseView.as_view() ,name='update-my-advertise'),
-    path('payment/', views.stripePayment, name="payment"),
-    path('payment/charge/', views.charge, name="payment-charge"),
+    path('payment/<int:pk>/', views.stripePayment, name="payment"),
+    path('payment/charge/<str:pk>/', views.charge, name="payment-charge"),
     path('payment/success/<str:args>/', views.successPayment, name="payment-success"),
 
   

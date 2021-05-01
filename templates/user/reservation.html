@@ -69,6 +69,7 @@
                                     <th>From Date</th>
                                     <th>To Date</th>
                                     <th>Location</th>
+                                    <th>Paid</th>
                                     <th>Preservation Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -79,17 +80,20 @@
                                         <td>{{ a.start_date }}</td>
                                         <td>{{ a.end_date }}</td>
                                         <td>{{ a.location }}</td>
+                                        <td>{{ a.paid }}</td>
                                         <td>{{ a.confirm|default_if_none:"" }}</td>
                                         <td>
-                                            {% if a.confirm == 'True' or k %}
+                                            {% if a.confirm == 'True' or k and a.paid != 'True' %}
                                             <a class="btn btn-outline-dark"
-                                               href="{% url 'payment' %}">Pay now?</a>
+                                               href="{% url 'payment' a.supply.id %}">Pay</a>
                                              {% elif a.confirm == 'False' or s %}
                                                 <a class="btn btn-outline-success"
                                                href="{% url 'update_user_reservation' a.id %}">Update!</a>
                                              {% elif a.confirm == '' or s %}
                                                 <a class="btn btn-outline-success"
                                                href="{% url 'update_user_reservation' a.id %}">Update!</a>
+                                              {% elif a.paid == 'True' %}
+                                                <span class="badge badge-danger">Paid</span>
                                               {% else %}
                                                 <span class="badge badge-danger">Approval Pending</span>
                                             {% endif %}

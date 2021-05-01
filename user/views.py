@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
+
+from home.models import Supply, ProductAttribute, Reservation
 from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -120,13 +122,23 @@ def user_password(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'user/user_password.html', {'form': form})
 
-def stripePayment(request):
-    return render(request, 'user/stripe_payment.html')
+def stripePayment(request, pk):
+    supply = Supply.objects.get(id=pk)
+    productatr = ProductAttribute.objects.get(supply=supply)
+    print(productatr.price)
+    context = {
+        'price': productatr.price,
+        's_id':pk
+    }
+    return render(request, 'user/stripe_payment.html', context=context)
 
-def charge(request):
+def charge(request, pk):
     if request.method == 'POST':
         print('Data:', request.POST)
-
+        supply = Supply.objects.get(id=pk)
+        reservation = Reservation.objects.get(supply=supply, user=request.user)
+        reservation.paid = True
+        reservation.save()
         amount = int(request.POST['amount'])
 
         customer = stripe.Customer.create(
