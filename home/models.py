@@ -53,8 +53,9 @@ class Supply(models.Model):
     slug = models.SlugField(null=False, unique=True)
     car_title =  models.CharField(max_length=150)
     city =  models.CharField(max_length=150)
-    price =  models.IntegerField()
-    main_photo =  models.ImageField(upload_to='photos/%Y/%m/%d/') 
+    # price =  models.IntegerField()
+    status =  models.BooleanField(default=False)
+    main_photo =  models.ImageField(upload_to='photos/%Y/%m/%d/')
     image1 =  models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     image2 =  models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     image3 =  models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
@@ -79,8 +80,8 @@ class Supply(models.Model):
     failities = RichTextUploadingField() 
     houserules = RichTextUploadingField()
     min_reserver_period = models.IntegerField()
-    pick_up_from = models.TimeField(blank=True)
-    drop_of_before = models.TimeField(blank=True)
+    pick_up_from = models.TimeField(blank=True,null=True)
+    drop_of_before = models.TimeField(blank=True,null=True)
     favourite = models.ManyToManyField(User,related_name='favourite',blank=True)
     is_published = models.BooleanField(default=True)
     def __str__(self):
@@ -109,8 +110,8 @@ class Supply(models.Model):
 class ProductAttribute(models.Model):
     supply=models.ForeignKey(Supply,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
-    transmission = models.ForeignKey(Transmission, on_delete=models.CASCADE)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE, null=True, blank=True)
+    transmission = models.ForeignKey(Transmission, on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return self.supply.title
@@ -134,12 +135,16 @@ class Rating(models.Model):
         return self.subject
 
 class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    supply=models.ForeignKey(Supply,on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    supply=models.ForeignKey(Supply,on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     location = models.CharField(max_length=50)
     confirm = models.BooleanField(null=True)
+    traveller = models.IntegerField(default=False)
+    price = models.IntegerField(default=False)
+    phone = models.CharField(max_length=11, default=False)
+    paid = models.BooleanField(null=True)
 
     def __str__(self):
         return self.location
@@ -162,3 +167,4 @@ class Message(models.Model):
     message=models.TextField(null=True,blank=True,default='')
     update_at = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=150, null=True, blank=True, default='')
+    email = models.EmailField(blank=True, null=True)

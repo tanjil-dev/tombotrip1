@@ -59,7 +59,11 @@
                         <body>
     <div style="width: 100%;">
         <div style="width: 30%; height: 100px; float: left; ">
-            {{ object.fromUser.username}}
+            {% if user.is_authenticated %}
+                {{ object.fromUser.username}}
+            {% else %}
+                {{ object.fromUser.email }}
+            {% endif %}
         </div>
         <div style="margin-left: 30%; height: 100px; ">
             {{ object.message }}

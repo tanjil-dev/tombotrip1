@@ -7,7 +7,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 from datetime import datetime as dt
 
-from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm
+from .forms import SupplyDetailsForm, ComposeForm, MessageForm, ReservationForm, MyAdvertiseForm,MyProductAttributeForm
 from .models import Experience, Supply, Rating, CommentForm, ProductAttribute, Cartypes, Reservation, Message
 
 from user.models import UserProfile
@@ -22,6 +22,8 @@ from django.template.loader import render_to_string
 from django.db.models import  Q
 from django.views import View
 from django.views.generic.list import ListView
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def test(request):
@@ -121,6 +123,7 @@ class ReservationView(View):
     page_number = 0
     def get(self, request):
         s = Reservation.objects.filter(supply__user=request.user)
+        k = Reservation.objects.filter(user=request.user)
         # ss = Supply.objects.get(user=request.user)
         # print(ss)
         if s.count()>0:
@@ -132,15 +135,116 @@ class ReservationView(View):
             self.page_number = request.GET.get('page')
             self.page_obj = paginator.get_page(self.page_number)
             print(self.page_obj)
+        elif k.count()> 0:
+            self.data = k
+            self.total_unreserved = k.count()
+            paginator = Paginator(self.data, 5)
+            self.page_number = request.GET.get('page')
+            self.page_obj = paginator.get_page(self.page_number)
+            print(self.page_obj)
         else:
             self.msg = "No data found"
         context = {
             'page_obj': self.page_obj,
+            's': s,
+            'k': k,
             'form': self.my_form,
             'total': self.total_unreserved,
             'msg': self.msg
         }
         return render(request, template_name=self.template_name, context=context)
+
+class MyAdvertiseView(View):
+    template_name = "user/my_advertise.html"
+    form = MyAdvertiseForm
+    page_obj = None
+    def get(self, request):
+        data = Supply.objects.all()
+        paginator = Paginator(data, 5)
+        self.page_number = request.GET.get('page')
+        self.page_obj = paginator.get_page(self.page_number)
+        print(self.page_obj)
+        context = {
+            'page_obj': self.page_obj,
+            'form': self.form
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+class DeleteAdvertiseView(View):
+    template_name = "user/delete_advertise.html"
+    def get(self, request, pk):
+        data = Supply.objects.get(id=pk)
+        if request.method == "POST":
+            data.delete()
+            return redirect('my-advertise')
+        context = {
+            'item': data
+        }
+        return render(request, template_name=self.template_name, context=context)
+    def post(self, request, pk):
+        data = Supply.objects.get(id=pk)
+        data.delete()
+        return redirect('my-advertise')
+
+class AddAdvertiseView(View):
+    template_name = "user/add_advertise.html"
+    form = MyAdvertiseForm
+    def get(self, request):
+        context = {
+            'form': self.form,
+            'prform':MyProductAttributeForm
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request):
+        try:
+            self.form = MyAdvertiseForm(request.POST, request.FILES)
+            prform = MyProductAttributeForm(request.POST)
+            supply = Supply.objects.latest('id')
+            print(supply)
+            if self.form.is_valid() and prform.is_valid():
+                user = request.user
+                cartypes = self.form.cleaned_data['cartypes']
+                # title = self.form.cleaned_data['title']
+                # slug = self.form.cleaned_data['slug']
+                # cart_title = self.form.cleaned_data['car_title']
+                # city = self.form.cleaned_data['city']
+                # # price = self.form.cleaned_data['price']
+                # status = self.form.cleaned_data['status']
+                # main_photo = self.form.cleaned_data['main_photo']
+                # image1 = self.form.cleaned_data['image1']
+                # image2 = self.form.cleaned_data['image2']
+                # image3 = self.form.cleaned_data['image3']
+                # seats = self.form.cleaned_data['seats']
+                # bearth = self.form.cleaned_data['bearth']
+                # feature = self.form.cleaned_data['features']
+                # description = self.form.cleaned_data['description']
+                # facilities = self.form.cleaned_data['description']
+                # houserules = self.form.cleaned_data['houserules']
+                # min_reserve_period = self.form.cleaned_data['min_reserver_period']
+                # pick_up_from = self.form.cleaned_data['pick_up_from']
+                # drop_of_before = self.form.cleaned_data['drop_of_before']
+                favourite = self.form.cleaned_data['favourite']
+                # is_published = self.form.cleaned_data['is_published']
+                # ct = Cartypes.objects.filter(title=cartypes)
+                # ur = User.objects.filter(username=favourite)
+                supply = self.form.save(commit=False)
+                supply.user=user
+                supply.save()
+                supply.save()
+                for u in cartypes:
+                    supply.cartypes.add(u)
+                for u in favourite:
+                    supply.favourite.add(u)
+                pratr=prform.save(commit=False)
+                pratr.supply=supply
+                pratr.save()
+            else:
+                print(self.form.errors.as_data())
+                print(prform.errors.as_data())
+        except Exception as ex:
+            print(ex)
+        return redirect('my-advertise')
 
 class UpdateReservationView(View):
     template_name = "user/update_reservation.html"
@@ -162,6 +266,26 @@ class UpdateReservationView(View):
                 self.form.save()
                 return redirect('user_reservation')
 
+class UpdateAdvertiseView(View):
+    template_name = "user/update_advertise.html"
+    form = MyAdvertiseForm
+    def get(self, request, pk):
+        supply = Supply.objects.get(id=pk)
+        self.form = MyAdvertiseForm(instance=supply)
+        context = {
+            "form": self.form
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request, pk):
+        supply = Supply.objects.get(id=pk)
+        self.form = MyAdvertiseForm(instance=supply)
+        if request.method == 'POST':
+            self.form = MyAdvertiseForm(request.POST, instance=supply)
+            if self.form.is_valid():
+                self.form.save()
+                return redirect('my-advertise')
+
 class SupplyDetails(View):
     template_name = "home/supply_details.html"
     my_form = SupplyDetailsForm
@@ -182,10 +306,31 @@ class SupplyDetails(View):
             start_date = request.GET['start_date']
             end_date = request.GET['end_date']
             location = request.GET['location']
-            reservation = Reservation.objects.create(user=user_name, supply=supply_name, end_date=end_date, start_date=start_date, location=location)
+            traveller = request.GET['traveller']
+            phone = request.GET['phone']
+            reservation = Reservation.objects.create(user=user_name, supply=supply_name, end_date=end_date, start_date=start_date, location=location, traveller=traveller, phone=phone)
             self.msg = "Reservation submitted"
+
+            message = "We have received your reservation in location: " + location + ". Please wait for supplier confirmation: " + str(supply)
+
+            send_mail('Tombotrip reservation form submitted',
+                      message,
+                      settings.EMAIL_HOST_USER,
+                      ['tanzil.ovi578@gmail.com'],
+                      fail_silently=False)
+
         else:
             self.msg = "Please Login for reservation"
+        price = 0
+        try:
+            print(supply.id)
+            atr = ProductAttribute.objects.all()
+            for at in atr:
+                print(at.id)
+            price = ProductAttribute.objects.filter(supply=supply).order_by('-id')[0].price
+            print(price)
+        except Exception as ex:
+            print(ex)
         context ={
             'message': self.msg,
             'supply':supply,
@@ -194,8 +339,9 @@ class SupplyDetails(View):
             'supply_list':supply_list,
             'form': self.my_form,
             'form_msg':self.message_form,
-            'price':ProductAttribute.objects.get(supply=supply).price
+            'price':price,
         }
+
         return render(request, template_name=self.template_name, context=context)
 
     def post(self, request, slug, id):
@@ -210,6 +356,12 @@ class SupplyDetails(View):
             fromUser = request.user
             messages = request.POST['message']
             sendMessage = Message.objects.create(toUser=toUser, fromUser=fromUser,  message=messages)
+            self.msg = "Message submitted"
+        else:
+            toUser = supply.user
+            email = request.POST['email']
+            messages = request.POST['message']
+            sendMessage = Message.objects.create(toUser=toUser, message=messages, email=email)
             self.msg = "Message submitted"
         context = {
             'message': self.msg,
@@ -356,7 +508,7 @@ class MessageListView(ListView):
         return context
 
 def message_create(request,username):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         # create a form instance and populate it with data from the request:
         toUser = User.objects.get(username=username)
         fromUser = request.user

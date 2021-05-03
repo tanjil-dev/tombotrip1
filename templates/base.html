@@ -4,48 +4,47 @@
 <head>
     {% include 'partials/head.html' %}
     <title>
-        TombiTrip  {% block title %}{% endblock %}
+        TombiTrip {% block title %}{% endblock %}
     </title>
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Inter&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css">
 </head>
 
 <body>
-    {% include 'partials/navbar.html' %}
-    {% block content %}
-    {% endblock content %}
-    {% include 'partials/footer.html' %}
-    <script>
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
+{% include 'partials/navbar.html' %}
+{% block content %}
+{% endblock content %}
+{% include 'partials/footer.html' %}
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+    });
 
-    </script>
-
-
+</script>
 
 
-    <!--All JS-->
+<!--All JS-->
 
 
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
 
-    <script src="{% static 'js/select2.min.js' %}"></script>
-    <script src="{% static 'js/lightbox.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/plugins.js' %}"></script>
-    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
-    
-    <!--magnific-popup-->
-    <script src="{% static 'js/jquery.magnific-popup.js'%}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/lightbox.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
 
-    <!--Address ind-->
-    <script src="{% static 'js/places.js@1.16.4.js'%}"></script>
+<!--magnific-popup-->
+<script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+
+<!--Address ind-->
+<script src="{% static 'js/places.js@1.16.4.js' %}"></script>
 
 
-    <!--Custom / main JS. Install here-->
-    <script src="{% static 'js/custom.js'%}"></script>
-    <script src="{% static 'js/channel.js'%}"></script>
+<!--Custom / main JS. Install here-->
+<script src="{% static 'js/custom.js' %}"></script>
+<script src="{% static 'js/channel.js' %}"></script>
 
 </body>
 
