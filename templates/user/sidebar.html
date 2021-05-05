@@ -34,7 +34,10 @@
                 <a href="reviews.html"><i class="fa fa-star" aria-hidden="true"></i>Reviews</a>
             </li>
             <li>
-                <a href="{% url 'user_reservation' %}"><i class="fa fa-moon-o" aria-hidden="true"></i>Reservation <span class="badge badge-danger">{{ total |default_if_none:'0' }}</span></a>
+                <a href="{% url 'user_reservation' %}"><i class="fa fa-moon-o" aria-hidden="true"></i>User Reservation <span class="badge badge-danger">{{ total |default_if_none:'0' }}</span></a>
+            </li>
+            <li>
+                <a href="{% url 'supply_reservation' %}"><i class="fa fa-moon-o" aria-hidden="true"></i>Supplier Reservation <span class="badge badge-danger">{{ total |default_if_none:'0' }}</span></a>
             </li>
         </ul>
     </div>

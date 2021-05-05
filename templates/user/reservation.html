@@ -46,11 +46,11 @@
                 {% endfor %}
             {% endif %}
 
-        {% if msg %}
-            <div class="alert alert-danger" role="alert">
-                {{ msg }}
-            </div>
-        {% endif %}
+            {% if msg %}
+                <div class="alert alert-danger" role="alert">
+                    {{ msg }}
+                </div>
+            {% endif %}
 
             <div class="row move-dashboard">
                 <!-- add partial sidebar -->
@@ -83,19 +83,25 @@
                                         <td>{{ a.paid }}</td>
                                         <td>{{ a.confirm|default_if_none:"" }}</td>
                                         <td>
-                                            {% if a.confirm == 'True' or a.confirm == k or a.paid != 'True' %}
-                                            <a class="btn btn-outline-dark"
-                                               href="{% url 'payment' a.supply.id %}">Pay</a>
-                                             {% elif a.confirm == 'False' and a.confirm == s %}
-                                                <a class="btn btn-outline-success"
-                                               href="{% url 'update_user_reservation' a.id %}">Update!</a>
-                                             {% elif a.confirm == '' or a.confirm == None and a.confirm == s %}
-                                                <a class="btn btn-outline-success"
-                                               href="{% url 'update_user_reservation' a.id %}">Update!</a>
-                                              {% elif a.paid == 'True' %}
-                                                <span class="badge badge-danger">Paid</span>
-                                              {% else %}
-                                                <span class="badge badge-danger">Approval Pending</span>
+                                            {% if s %}
+                                                {% if a.confirm != True or a.confirm == None %}
+
+                                                    <a class="btn btn-outline-success"
+                                                       href="{% url 'update_user_reservation' a.id %}">Update!</a>
+                                                {% elif a.paid == True %}
+                                                    <span class="badge badge-danger">Payment Done</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger">Payment Pending</span>
+                                                {% endif %}
+                                            {% elif k %}
+                                                {% if a.confirm == True or a.paid == False %}
+                                                    <a class="btn btn-outline-dark"
+                                                       href="{% url 'payment' a.supply.id %}">Pay</a>
+                                                {% elif a.paid == True %}
+                                                    <span class="badge badge-danger">Payment Done</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger">Approval Pending</span>
+                                                {% endif %}
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -136,7 +142,6 @@
 
                     </ul>
                 </div>
-
             </div>
         </div>
     </div>

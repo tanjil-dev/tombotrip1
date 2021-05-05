@@ -1,14 +1,15 @@
 from django.urls import path
 
 from home.views import ReservationView, UpdateReservationView, MyAdvertiseView, DeleteAdvertiseView, \
-    UpdateAdvertiseView, AddAdvertiseView
+    UpdateAdvertiseView, AddAdvertiseView, ReservationSupplierView
 from . import views
 
 urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
-    path('profile/reservation', ReservationView.as_view(), name='user_reservation'),
+    path('profile/reservation/user', ReservationView.as_view(), name='user_reservation'),
+    path('profile/reservation/supplier', ReservationSupplierView.as_view(), name='supply_reservation'),
     path('my_advertise/', MyAdvertiseView.as_view(), name='my-advertise'),
-    path('my_advertise/add', AddAdvertiseView.as_view(), name='add-advertise'),
+    path('my_advertise/add/', AddAdvertiseView.as_view(), name='add-advertise'),
     path('password/',views.user_password,name='password'),
     path('update/<str:pk>/', views.user_update,name='user_update'),
     path('profile/reservation/update/<str:pk>/', UpdateReservationView.as_view() ,name='update_user_reservation'),
