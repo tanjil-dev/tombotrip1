@@ -83,7 +83,7 @@
                                         <td>{{ a.paid }}</td>
                                         <td>{{ a.confirm|default_if_none:"" }}</td>
                                         <td>
-                                            {% if a.confirm == 'True' or a.confirm == k and a.paid != 'True' %}
+                                            {% if a.confirm == 'True' or a.confirm == k or a.paid != 'True' %}
                                             <a class="btn btn-outline-dark"
                                                href="{% url 'payment' a.supply.id %}">Pay</a>
                                              {% elif a.confirm == 'False' and a.confirm == s %}
