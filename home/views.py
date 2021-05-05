@@ -122,20 +122,20 @@ class ReservationView(View):
     page_obj = None
     page_number = 0
     def get(self, request):
-        s = Reservation.objects.filter(supply__user=request.user)
+        # s = Reservation.objects.filter(supply__user=request.user)
         k = Reservation.objects.filter(user=request.user)
         # ss = Supply.objects.get(user=request.user)
         # print(ss)
-        if s.count()>0:
-            # print("ss", s)
-
-            self.data = s
-            self.total_unreserved = s.count()
-            paginator = Paginator(self.data, 5)
-            self.page_number = request.GET.get('page')
-            self.page_obj = paginator.get_page(self.page_number)
-            print(self.page_obj)
-        elif k.count()> 0:
+        # if s.count()>0:
+        #     # print("ss", s)
+        #
+        #     self.data = s
+        #     self.total_unreserved = s.count()
+        #     paginator = Paginator(self.data, 5)
+        #     self.page_number = request.GET.get('page')
+        #     self.page_obj = paginator.get_page(self.page_number)
+        #     print(self.page_obj)
+        if k.count()> 0:
             self.data = k
             self.total_unreserved = k.count()
             paginator = Paginator(self.data, 5)
@@ -146,8 +146,36 @@ class ReservationView(View):
             self.msg = "No data found"
         context = {
             'page_obj': self.page_obj,
-            's': s,
             'k': k,
+            'form': self.my_form,
+            'total': self.total_unreserved,
+            'msg': self.msg
+        }
+        return render(request, template_name=self.template_name, context=context)
+
+class ReservationSupplierView(View):
+    template_name = "user/reservation.html"
+    my_form = ReservationForm
+    data = None
+    total_unreserved = None
+    msg = None
+    page_obj = None
+    page_number = 0
+
+    def get(self, request):
+        s = Reservation.objects.filter(supply__user=request.user)
+        if s.count() > 0:
+            self.data = s
+            self.total_unreserved = s.count()
+            paginator = Paginator(self.data, 5)
+            self.page_number = request.GET.get('page')
+            self.page_obj = paginator.get_page(self.page_number)
+            print(self.page_obj)
+        else:
+            self.msg = "No data found"
+        context = {
+            'page_obj': self.page_obj,
+            's': s,
             'form': self.my_form,
             'total': self.total_unreserved,
             'msg': self.msg
