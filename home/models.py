@@ -140,7 +140,7 @@ class Reservation(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     location = models.CharField(max_length=50)
-    confirm = models.BooleanField(null=True)
+    confirm = models.BooleanField(null=True, default=False)
     traveller = models.IntegerField(default=False)
     price = models.IntegerField(default=False)
     phone = models.CharField(max_length=11, default=False)

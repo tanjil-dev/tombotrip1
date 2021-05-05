@@ -159,7 +159,7 @@ class MyAdvertiseView(View):
     form = MyAdvertiseForm
     page_obj = None
     def get(self, request):
-        data = Supply.objects.all()
+        data = Supply.objects.filter(user=request.user)
         paginator = Paginator(data, 5)
         self.page_number = request.GET.get('page')
         self.page_obj = paginator.get_page(self.page_number)
