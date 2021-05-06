@@ -122,21 +122,22 @@ def user_password(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'user/user_password.html', {'form': form})
 
-def stripePayment(request, pk):
+def stripePayment(request, pk, ck):
     supply = Supply.objects.get(id=pk)
     productatr = ProductAttribute.objects.get(supply=supply)
     print(productatr.price)
     context = {
         'price': productatr.price,
-        's_id':pk
+        's_id':pk,
+        'r_id':ck
     }
     return render(request, 'user/stripe_payment.html', context=context)
 
-def charge(request, pk):
+def charge(request, pk,ck):
     if request.method == 'POST':
         print('Data:', request.POST)
         supply = Supply.objects.get(id=pk)
-        reservation = Reservation.objects.get(supply=supply, user=request.user)
+        reservation = Reservation.objects.get(id=ck ,supply=supply, user=request.user)
         reservation.paid = True
         reservation.save()
         amount = int(request.POST['amount'])
