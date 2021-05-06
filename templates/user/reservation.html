@@ -94,10 +94,10 @@
                                                     <span class="badge badge-danger">Payment Pending</span>
                                                 {% endif %}
                                             {% elif k %}
-                                                {% if a.confirm == True or a.paid == False %}
+                                                {% if a.confirm == True and a.paid == None  %}
                                                     <a class="btn btn-outline-dark"
-                                                       href="{% url 'payment' a.supply.id %}">Pay</a>
-                                                {% elif a.paid == True %}
+                                                       href="{% url 'payment' a.supply.id a.id %}">Pay</a>
+                                                {% elif a.paid == True and a.paid == True  %}
                                                     <span class="badge badge-danger">Payment Done</span>
                                                 {% else %}
                                                     <span class="badge badge-danger">Approval Pending</span>
