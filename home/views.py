@@ -370,8 +370,9 @@ class SupplyDetails(View):
         }
 
         return render(request, template_name=self.template_name, context=context)
-
     def post(self, request, slug, id):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/login/')
         supply = Supply.objects.get(pk=id, slug=slug)
         comments = Rating.objects.filter(supply_id=id, status='True')
         supply_list = Supply.objects.all().order_by('id')[:3]
@@ -401,9 +402,6 @@ class SupplyDetails(View):
         }
         return render(request, template_name=self.template_name, context=context)
 
-    @method_decorator(login_required(login_url='/login/'))
-    def dispatch(self, *args, **kwargs):
-        return super(SupplyDetails, self).dispatch(*args, **kwargs)
 
 # class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
 #     template_name = 'chat/thread.html'
