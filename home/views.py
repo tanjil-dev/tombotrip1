@@ -314,6 +314,7 @@ class UpdateAdvertiseView(View):
                 self.form.save()
                 return redirect('my-advertise')
 
+
 class SupplyDetails(View):
     template_name = "home/supply_details.html"
     my_form = SupplyDetailsForm
@@ -347,8 +348,6 @@ class SupplyDetails(View):
                       ['tanzil.ovi578@gmail.com'],
                       fail_silently=False)
 
-        else:
-            self.msg = "Please Login for reservation"
         price = 0
         try:
             print(supply.id)
@@ -401,6 +400,10 @@ class SupplyDetails(View):
             'form_msg': self.message_form
         }
         return render(request, template_name=self.template_name, context=context)
+
+    @method_decorator(login_required(login_url='/login/'))
+    def dispatch(self, *args, **kwargs):
+        return super(SupplyDetails, self).dispatch(*args, **kwargs)
 
 # class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
 #     template_name = 'chat/thread.html'
